@@ -1,11 +1,40 @@
 import * as React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, Button} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+
+import {getProductService} from '../services/DependencyResolver';
 
 export default function ProductsScreen() {
+  const [products] = React.useState(getProductService().getProducts());
   return (
-    <View style={styles.centerText}>
-      <Text>Products!</Text>
-    </View>
+    <SafeAreaView>
+      <View>
+        <Text>PRODUCTS</Text>
+        <FlatList
+          style={{width: '100%', height: '100%', marginTop: 50}}
+          data={products}
+          keyExtractor={(_, index) => index.toString()}
+          renderItem={({item}) => {
+            return (
+              <View style={{flexDirection: 'row'}}>
+                <Button title="+" />
+                <TouchableOpacity
+                  style={{
+                    width: 30,
+                    height: 30,
+                    backgroundColor: item.category.color,
+                  }}
+                />
+                <Text style={{width: '100%', marginTop: 10, marginLeft: 20}}>
+                  {item.name}
+                </Text>
+              </View>
+            );
+          }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
