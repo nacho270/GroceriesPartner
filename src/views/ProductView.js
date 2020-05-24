@@ -7,13 +7,15 @@ import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 
+import Color from '../shared/Colors';
+
 import {getProductService} from '../services/DependencyResolver';
 
 export default function ProductsScreen() {
+  const [filterBy, setFilter] = useState('');
+
   const [products] = useState(getProductService().getProducts());
   const [categories] = useState(getProductService().getCategories());
-
-  const [filterBy, setFilter] = useState('');
 
   return (
     <SafeAreaView>
@@ -23,117 +25,83 @@ export default function ProductsScreen() {
         maxLength={30}
         onChangeText={value => setFilter(value)}
       />
-      <View style={styles.list}>
-        <Text style={styles.title}>Products</Text>
-        <FlatList
-          data={products.filter(prod => prod.name.includes(filterBy))}
-          keyExtractor={(_, index) => index.toString()}
-          renderItem={({item: product}) => {
-            return (
-              <View style={styles.row}>
-                <View
-                  style={{
-                    ...styles.rowButton,
-                    backgroundColor: product.category.color,
-                  }}
-                />
-                <Text style={styles.rowText}>{product.name}</Text>
-              </View>
-            );
-          }}
-        />
-        <View style={{flexDirection: 'row-reverse', padding: 20}}>
-          <TouchableOpacity
-            style={{
-              height: 40,
-              width: 40,
-              borderRadius: 40,
-              backgroundColor: '#1a98fc',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                fontSize: 30,
-                color: 'white',
-                textAlignVertical: 'center',
-                textAlign: 'center',
-                marginTop: -5,
-              }}>
-              +
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View
-        style={{width: '100%', borderBottomColor: 'red', borderBottomWidth: 1}}
+
+      <ListSection
+        title="Products"
+        items={products.filter(prod => prod.name.includes(filterBy))}
+        colorResolver={prod => prod.category.color}
       />
-      <View style={styles.list}>
-        <Text style={styles.title}>Categories</Text>
-        <FlatList
-          data={categories}
-          keyExtractor={(_, index) => index.toString()}
-          renderItem={({item: category}) => {
-            return (
-              <View style={styles.row}>
-                <View
-                  style={{
-                    ...styles.rowButton,
-                    backgroundColor: category.color,
-                  }}
-                />
-                <Text style={styles.rowText}>{category.name}</Text>
-              </View>
-            );
-          }}
-        />
-        <View style={{flexDirection: 'row-reverse', padding: 20}}>
-          <TouchableOpacity
-            style={{
-              height: 40,
-              width: 40,
-              borderRadius: 40,
-              backgroundColor: '#1a98fc',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                fontSize: 30,
-                color: 'white',
-                textAlignVertical: 'center',
-                textAlign: 'center',
-                marginTop: -5,
-              }}>
-              +
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+
+      <View style={styles.separator} />
+
+      <ListSection
+        title="Categories"
+        items={categories}
+        colorResolver={cat => cat.color}
+      />
     </SafeAreaView>
   );
 }
 
+const ListSection = props => {
+  return (
+    <View style={styles.list}>
+      <Text style={styles.title}>{props.title}</Text>
+      <FlatList
+        data={props.items}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({item: item}) => {
+          return (
+            <View style={styles.row}>
+              <View
+                style={{
+                  ...styles.rowThumbnail,
+                  backgroundColor: props.colorResolver(item),
+                }}
+              />
+              <Text style={styles.rowText}>{item.name}</Text>
+            </View>
+          );
+        }}
+      />
+      <View style={styles.addButtonContainer}>
+        <TouchableOpacity style={styles.addButton}>
+          <Text style={styles.addButtonText}>+</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    borderColor: 'grey',
+    borderColor: Color.row_separator,
     borderBottomWidth: 1,
     padding: 10,
   },
   title: {padding: 20},
-  rowButton: {
+  rowThumbnail: {
     width: 30,
     height: 30,
     borderRadius: 20,
   },
-  rowText: {width: '100%', marginTop: 10, marginLeft: 20},
+  rowText: {
+    width: '100%',
+    marginTop: 10,
+    marginLeft: 20,
+  },
   list: {
     width: '100%',
     height: '49%',
   },
+  separator: {
+    width: '100%',
+    borderBottomColor: Color.separator,
+    borderBottomWidth: 1,
+  },
   input: {
-    borderBottomColor: 'red',
+    borderBottomColor: Color.separator,
     borderBottomWidth: 1,
     fontSize: 16,
     padding: 8,
@@ -142,5 +110,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  addButtonContainer: {flexDirection: 'row-reverse', padding: 20},
+  addButton: {
+    height: 50,
+    width: 50,
+    borderRadius: 50,
+    backgroundColor: Color.add_button,
+    justifyContent: 'center',
+  },
+  addButtonText: {
+    fontSize: 30,
+    color: 'white',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    marginTop: -5,
   },
 });
