@@ -10,9 +10,8 @@ export default function ProductsScreen() {
   return (
     <SafeAreaView>
       <View>
-        <Text>PRODUCTS</Text>
         <FlatList
-          style={{width: '100%', height: '100%', marginTop: 50}}
+          style={{width: '100%', height: '100%'}}
           data={products}
           keyExtractor={(_, index) => index.toString()}
           renderItem={({item}) => {

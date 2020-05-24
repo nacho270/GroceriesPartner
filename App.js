@@ -16,9 +16,9 @@ export default function App() {
       <NavigationContainer>
         <StatusBar barStyle="dark-content" />
         <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeScreen} />
+          {/* <Tab.Screen name="Home" component={HomeScreen} /> */}
           <Tab.Screen name="Products" component={ProductsScreen} />
-          <Tab.Screen name="Recipes" component={RecipesScreen} />
+          {/* <Tab.Screen name="Recipes" component={RecipesScreen} /> */}
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
