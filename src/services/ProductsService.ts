@@ -8,7 +8,7 @@ export class ProductService {
 
   constructor(private shoppingListService: ShoppingListService) {
     let carniceria = new Category('Carniceria', '#FF0000');
-    let verduleria = new Category('Verduleria', '#00FF00');
+    let verduleria = new Category('Verduleria', '#1c912f');
     this.categories.push(carniceria, verduleria);
 
     let bife = new Product('Bife', carniceria);
