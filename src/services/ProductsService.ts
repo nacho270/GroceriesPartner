@@ -1,14 +1,15 @@
 import {Category} from './../model/Category';
 import {Product} from './../model/Product';
 import {ShoppingListService} from './ShoppingListService';
+import Color from '../shared/Colors';
 
 export class ProductService {
   private products: Product[] = [];
   private categories: Category[] = [];
 
   constructor(private shoppingListService: ShoppingListService) {
-    let carniceria = new Category('Carniceria', '#FF0000');
-    let verduleria = new Category('Verduleria', '#1c912f');
+    let carniceria = new Category('Carniceria', Color.category.red);
+    let verduleria = new Category('Verduleria', Color.category.green);
     this.categories.push(carniceria, verduleria);
 
     let bife = new Product('Bife', carniceria);

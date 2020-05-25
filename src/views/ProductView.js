@@ -10,6 +10,7 @@ import {
 import Color from '../shared/Colors';
 
 import {getProductService} from '../services/DependencyResolver';
+import {Modal} from 'react-native';
 
 export default function ProductsScreen() {
   const [filterBy, setFilter] = useState('');
@@ -43,7 +44,55 @@ export default function ProductsScreen() {
   );
 }
 
+const AddModal = props => {
+  const [data, setData] = useState('');
+  const onEnteredData = enteredData => {
+    setData(enteredData);
+  };
+
+  return (
+    <Modal visible={props.visible} animationType="slide">
+      <SafeAreaView
+        style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <TextInput
+          placeholder="Name..."
+          style={{
+            borderBottomColor: Color.separator,
+            borderBottomWidth: 1,
+            padding: 10,
+            width: '80%',
+          }}
+          onChangeText={onEnteredData}
+        />
+        {props.extraComponent}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Button
+            title="Add"
+            style={{width: 150, height: 20}}
+            onPress={props.onClose.bind(this, data)}
+          />
+          <Button
+            title="Cancel"
+            style={{width: 50, height: 20}}
+            onPress={props.onClose.bind(this, null)}
+          />
+        </View>
+      </SafeAreaView>
+    </Modal>
+  );
+};
+
 const ListSection = props => {
+  const [isAdding, setIsAdding] = useState(false);
+  const addItemHandler = enteredData => {
+    console.log(enteredData);
+    setIsAdding(false);
+  };
   return (
     <View style={styles.list}>
       <Text style={styles.title}>{props.title}</Text>
@@ -65,10 +114,17 @@ const ListSection = props => {
         }}
       />
       <View style={styles.addButtonContainer}>
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => setIsAdding(true)}>
           <Text style={styles.addButtonText}>+</Text>
         </TouchableOpacity>
       </View>
+      <AddModal
+        visible={isAdding}
+        onClose={addItemHandler}
+        extraComponent={<Text>Puto</Text>}
+      />
     </View>
   );
 };
