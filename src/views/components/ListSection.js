@@ -1,44 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
-
-import AddModal from './AddModal';
+import {FlatList} from 'react-native-gesture-handler';
 import Color from '../../shared/Colors';
 
 const ListSection = props => {
-  const [isAdding, setIsAdding] = useState(false);
-  const addItemHandler = enteredData => {
-    if (enteredData) {
-      console.log(enteredData);
-    }
-    setIsAdding(false);
-  };
-
-  let addPanel = null;
-  if (!props.hideAdd) {
-    addPanel = (
-      <>
-        <View style={styles.addButtonContainer}>
-          <TouchableOpacity
-            style={styles.addButton}
-            onPress={() => setIsAdding(true)}>
-            <Text style={styles.addButtonText}>+</Text>
-          </TouchableOpacity>
-        </View>
-        <AddModal
-          visible={isAdding}
-          onClose={addItemHandler}
-          placeholder={props.placeholder}
-          extraComponent={props.extraComponent}
-        />
-      </>
-    );
-  }
-
   return (
-    <View style={{...styles.list, ...props.styles}}>
+    // <View style={{...styles.list, ...props.styles}}>
+    <View style={styles.list}>
       <Text style={styles.title}>{props.title}</Text>
       <FlatList
+        style={{height: '70%'}}
         data={props.items}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({item: item}) => {
@@ -55,21 +26,20 @@ const ListSection = props => {
           );
         }}
       />
-      {addPanel}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   title: {padding: 20, fontSize: 25, fontWeight: 'bold', textAlign: 'center'},
+  list: {
+    width: '100%',
+  },
   row: {
     flexDirection: 'row',
     borderColor: Color.row_separator,
     borderBottomWidth: 1,
     padding: 10,
-  },
-  list: {
-    width: '100%',
   },
   rowThumbnail: {
     width: 30,
@@ -80,21 +50,6 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 10,
     marginLeft: 20,
-  },
-  addButtonContainer: {flexDirection: 'row-reverse', padding: 20},
-  addButton: {
-    height: 50,
-    width: 50,
-    borderRadius: 50,
-    backgroundColor: Color.add_button,
-    justifyContent: 'center',
-  },
-  addButtonText: {
-    fontSize: 30,
-    color: 'white',
-    textAlignVertical: 'center',
-    textAlign: 'center',
-    marginTop: -5,
   },
 });
 

@@ -6,12 +6,23 @@ import Color from '../../shared/Colors';
 
 const ColorGrid = props => {
   const [selected, setSelected] = useState();
+
+  const colorSelectedHandler = color => {
+    setSelected(color);
+    props.onColorSelected(color);
+  };
+
   const renderItem = data => {
     let currentStyle = [{backgroundColor: data}, styles.gridItem];
     if (data === selected) {
       currentStyle.push({borderColor: 'orange', borderWidth: 3});
     }
-    return <View style={currentStyle} onTouchStart={() => setSelected(data)} />;
+    return (
+      <View
+        style={currentStyle}
+        onTouchStart={() => colorSelectedHandler(data)}
+      />
+    );
   };
 
   const renderPlaceholder = () => <View style={styles.gridItem} />;

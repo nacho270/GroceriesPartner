@@ -3,8 +3,8 @@ import {View, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TextInput} from 'react-native-gesture-handler';
 
-import ListSection from './components/ListSection';
-import ColorGrid from './components/ColorGrid';
+import CategoriesList from './components/CategoriesList';
+import ProductsList from './components/ProductsList';
 
 import Color from '../shared/Colors';
 import {getProductService} from '../services/DependencyResolver';
@@ -26,33 +26,17 @@ export default function ProductsScreen() {
         blurOnSubmit={false}
       />
 
-      <ListSection
-        title="Products"
-        items={products.filter(prod => prod.name.includes(filterBy))}
-        colorResolver={prod => prod.category.color}
-        styles={{height: '49%'}}
-        placeholder="Product..."
-        extraComponent={
-          <ListSection
-            title="Categories"
-            items={categories}
-            styles={{height: '100%'}}
-            colorResolver={cat => cat.color}
-            hideAdd
-          />
-        }
-      />
+      <View style={{height: '46%'}}>
+        <ProductsList
+          products={products.filter(prod => prod.name.includes(filterBy))}
+        />
+      </View>
 
       <View style={styles.separator} />
 
-      <ListSection
-        title="Categories"
-        placeholder="Category..."
-        items={categories}
-        styles={{height: '49%'}}
-        colorResolver={cat => cat.color}
-        extraComponent={<ColorGrid numColumns={3} />}
-      />
+      <View style={{height: '52%'}}>
+        <CategoriesList categories={categories} />
+      </View>
     </SafeAreaView>
   );
 }
@@ -60,8 +44,9 @@ export default function ProductsScreen() {
 const styles = StyleSheet.create({
   separator: {
     width: '100%',
+    height: '2%',
     borderBottomColor: Color.separator,
-    borderBottomWidth: 1,
+    borderBottomWidth: 4,
   },
   input: {
     borderBottomColor: Color.separator,

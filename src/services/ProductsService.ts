@@ -31,7 +31,23 @@ export class ProductService {
     let ribs = new Product('Ribs', carniceria);
     let papa = new Product('Papa', verduleria);
     let lechuga = new Product('Lechuga', verduleria);
-    this.products.push(bife, molleja, ribs, papa, lechuga);
+    this.products.push(
+      bife,
+      molleja,
+      ribs,
+      papa,
+      lechuga,
+      bife,
+      molleja,
+      ribs,
+      papa,
+      lechuga,
+      bife,
+      molleja,
+      ribs,
+      papa,
+      lechuga,
+    );
   }
 
   getProducts() {
