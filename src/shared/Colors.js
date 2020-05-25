@@ -15,6 +15,6 @@ export default {
     light_yellow: '#FEF284',
     light_grey: '#383838',
     dark_grey: '#868686',
-    mate_black: '#353535',
+    maroon: '#795548',
   },
 };
