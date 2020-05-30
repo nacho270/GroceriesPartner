@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Button, Modal, Alert} from 'react-native';
+import {View, StyleSheet, Button, Modal} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 
 import Color from '../../shared/Colors';
@@ -11,19 +11,8 @@ const AddModal = props => {
   };
 
   const handleSubmit = enteredData => {
-    if (!enteredData || enteredData.trim().length === 0) {
-      Alert.alert('You must enter a name', '', [{text: 'Ok', style: 'cancel'}]);
-      return;
-    }
-    if (!props.extraComponent.validate) {
-      props.onClose(data);
-      return;
-    }
-    let extraComponentError = props.extraComponent.props.validate();
-    if (extraComponentError) {
-      Alert.alert(extraComponentError, '', [{text: 'Ok', style: 'cancel'}]);
-      return;
-    }
+    props.onAdd(enteredData);
+    setData(undefined);
   };
 
   return (
@@ -41,7 +30,7 @@ const AddModal = props => {
         </View>
         <View style={styles.modalButtonsContainer}>
           <Button title="Add" onPress={() => handleSubmit(data)} />
-          <Button title="Cancel" onPress={props.onClose.bind(this, null)} />
+          <Button title="Cancel" onPress={props.onCancel.bind(this, null)} />
         </View>
       </View>
     </Modal>

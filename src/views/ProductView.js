@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TextInput} from 'react-native-gesture-handler';
@@ -7,14 +7,11 @@ import CategoriesList from './components/CategoriesList';
 import ProductsList from './components/ProductsList';
 
 import Color from '../shared/Colors';
-import {getProductService} from '../services/DependencyResolver';
 
 export default function ProductsScreen() {
-  //
-  const [filterBy, setFilter] = useState('');
-
-  const [products] = useState(getProductService().getProducts());
-  const [categories] = useState(getProductService().getCategories());
+  const onFireCategoriesUpdated = () => {
+    this.child.onFireCategoriesUpdated();
+  };
 
   return (
     <SafeAreaView>
@@ -22,20 +19,18 @@ export default function ProductsScreen() {
         placeholder="Search product..."
         style={styles.input}
         maxLength={30}
-        onChangeText={value => setFilter(value)}
+        onChangeText={value => this.child.setFilter(value)}
         blurOnSubmit={false}
       />
 
       <View style={{height: '46%'}}>
-        <ProductsList
-          products={products.filter(prod => prod.name.includes(filterBy))}
-        />
+        <ProductsList onRef={ref => (this.child = ref)} />
       </View>
 
       <View style={styles.separator} />
 
       <View style={{height: '52%'}}>
-        <CategoriesList categories={categories} />
+        <CategoriesList onFireCategoriesUpdated={onFireCategoriesUpdated} />
       </View>
     </SafeAreaView>
   );

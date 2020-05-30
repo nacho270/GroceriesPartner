@@ -8,46 +8,44 @@ export class ProductService {
   private categories: Category[] = [];
 
   constructor(private shoppingListService: ShoppingListService) {
-    let carniceria = new Category('Carniceria', Color.category.red);
-    let verduleria = new Category('Verduleria', Color.category.green);
-
-    this.categories.push(
-      carniceria,
-      verduleria,
-      carniceria,
-      verduleria,
-      carniceria,
-      verduleria,
-      carniceria,
-      verduleria,
-      carniceria,
-      verduleria,
-      carniceria,
-      verduleria,
-    );
-
-    let bife = new Product('Bife', carniceria);
-    let molleja = new Product('Molleja', carniceria);
-    let ribs = new Product('Ribs', carniceria);
-    let papa = new Product('Papa', verduleria);
-    let lechuga = new Product('Lechuga', verduleria);
-    this.products.push(
-      bife,
-      molleja,
-      ribs,
-      papa,
-      lechuga,
-      bife,
-      molleja,
-      ribs,
-      papa,
-      lechuga,
-      bife,
-      molleja,
-      ribs,
-      papa,
-      lechuga,
-    );
+    // let carniceria = new Category('Carniceria', Color.category.red);
+    // let verduleria = new Category('Verduleria', Color.category.green);
+    // this.categories.push(
+    //   carniceria,
+    //   verduleria,
+    //   carniceria,
+    //   verduleria,
+    //   carniceria,
+    //   verduleria,
+    //   carniceria,
+    //   verduleria,
+    //   carniceria,
+    //   verduleria,
+    //   carniceria,
+    //   verduleria,
+    // );
+    // let bife = new Product('Bife', carniceria);
+    // let molleja = new Product('Molleja', carniceria);
+    // let ribs = new Product('Ribs', carniceria);
+    // let papa = new Product('Papa', verduleria);
+    // let lechuga = new Product('Lechuga', verduleria);
+    // this.products.push(
+    //   bife,
+    //   molleja,
+    //   ribs,
+    //   papa,
+    //   lechuga,
+    //   bife,
+    //   molleja,
+    //   ribs,
+    //   papa,
+    //   lechuga,
+    //   bife,
+    //   molleja,
+    //   ribs,
+    //   papa,
+    //   lechuga,
+    // );
   }
 
   getProducts() {
@@ -57,7 +55,9 @@ export class ProductService {
   }
 
   getCategories() {
-    return this.categories.slice();
+    return this.categories
+      .slice()
+      .sort((c1, c2) => c1.name.localeCompare(c2.name));
   }
 
   addNewCategory(name: string, color: string) {

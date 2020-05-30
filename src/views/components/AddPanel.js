@@ -1,17 +1,31 @@
 import React, {useState} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, Alert} from 'react-native';
 import Color from '../../shared/Colors';
 import AddModal from './AddModal';
 
 const AddPanel = props => {
   const [isAdding, setIsAdding] = useState(false);
+
   const addItemHandler = enteredData => {
-    if (enteredData) {
-      console.log(enteredData);
+    if (!enteredData || enteredData.trim().length === 0) {
+      Alert.alert('You must enter a name', '', [{text: 'Ok', style: 'cancel'}]);
+      return;
     }
+    if (!props.validate) {
+      setIsAdding(false);
+      return;
+    }
+    let extraComponentError = props.validate();
+    if (extraComponentError) {
+      Alert.alert(extraComponentError, '', [{text: 'Ok', style: 'cancel'}]);
+      return;
+    }
+
     setIsAdding(false);
+    props.onSuccessfulSubmit(enteredData);
   };
+
   return (
     <>
       <View style={styles.addButtonContainer}>
@@ -23,7 +37,8 @@ const AddPanel = props => {
       </View>
       <AddModal
         visible={isAdding}
-        onClose={addItemHandler}
+        onAdd={addItemHandler}
+        onCancel={() => setIsAdding(false)}
         placeholder={props.placeholder}
         extraComponent={props.extraComponent}
       />
