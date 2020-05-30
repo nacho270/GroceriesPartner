@@ -1,13 +1,23 @@
 import {Category} from './../model/Category';
 import {Product} from './../model/Product';
 import {ShoppingListService} from './ShoppingListService';
+import AsyncStorage from '@react-native-community/async-storage';
 import Color from '../shared/Colors';
 
 export class ProductService {
   private products: Product[] = [];
   private categories: Category[] = [];
 
+  private CATEGORIES_STORAGE_KEY = '@categories';
+
+  private defaultCategpries: Category[] = [
+    new Category('Carniceria', Color.category.red),
+    new Category('Verduleria', Color.category.green),
+  ];
+
   constructor(private shoppingListService: ShoppingListService) {
+    this.readCategoriesFromStorage();
+
     // let carniceria = new Category('Carniceria', Color.category.red);
     // let verduleria = new Category('Verduleria', Color.category.green);
     // this.categories.push(
@@ -48,6 +58,34 @@ export class ProductService {
     // );
   }
 
+  private readCategoriesFromStorage = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem(this.CATEGORIES_STORAGE_KEY);
+      if (jsonValue === null) {
+        return;
+      }
+      let categoriesFromStorage = JSON.parse(jsonValue);
+      console.log('Categories from storage: ' + categoriesFromStorage);
+      for (var c in categoriesFromStorage) {
+        this.categories.push(
+          new Category(
+            categoriesFromStorage[c].name,
+            categoriesFromStorage[c].color,
+          ),
+        );
+      }
+    } catch (e) {
+      return;
+    }
+  };
+
+  private storeCategories = async () => {
+    try {
+      const jsonValue = JSON.stringify(this.categories);
+      await AsyncStorage.setItem(this.CATEGORIES_STORAGE_KEY, jsonValue);
+    } catch (e) {}
+  };
+
   getProducts() {
     return this.products
       .slice()
@@ -55,13 +93,23 @@ export class ProductService {
   }
 
   getCategories() {
-    return this.categories
-      .slice()
-      .sort((c1, c2) => c1.name.localeCompare(c2.name));
+    let cats = this.categories;
+    if (cats.length === 0) {
+      return cats.slice();
+    }
+    return cats.sort((c1, c2) => c1.name.localeCompare(c2.name));
   }
 
   addNewCategory(name: string, color: string) {
+    if (this.getCategoryByName(name).length > 0) {
+      throw 'Category ' + name + ' already exists';
+    }
     this.categories.push(new Category(name, color));
+    this.storeCategories();
+  }
+
+  getCategoryByName(name: string): Category[] {
+    return this.categories.filter(c => c.name === name);
   }
 
   removeCategory(name: string) {
@@ -69,6 +117,7 @@ export class ProductService {
       throw "Cannot delete the category because it's being used";
     }
     this.categories = this.categories.filter(c => c.name !== name);
+    this.storeCategories();
   }
 
   removeProduct(name: string) {

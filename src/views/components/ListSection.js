@@ -1,9 +1,28 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {Text, View, StyleSheet, Alert} from 'react-native';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import Color from '../../shared/Colors';
 
 const ListSection = props => {
+  const handleDelete = name => {
+    console.log('Handle delete: ' + name);
+    Alert.alert(
+      'Delete ' + name + '?',
+      '',
+      [
+        {
+          text: 'Yes',
+          onPress: () => props.deleteRequested(name),
+        },
+        {
+          text: 'No',
+          style: 'destructive',
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
   return (
     // <View style={{...styles.list, ...props.styles}}>
     <View style={styles.list}>
@@ -14,7 +33,10 @@ const ListSection = props => {
         keyExtractor={(_, index) => index.toString()}
         renderItem={({item: item}) => {
           return (
-            <View style={styles.row}>
+            <TouchableOpacity
+              style={styles.row}
+              onPress={() => handleDelete(item.name)}
+              onLongPress={() => handleDelete(item.name)}>
               <View
                 style={{
                   ...styles.rowThumbnail,
@@ -22,7 +44,7 @@ const ListSection = props => {
                 }}
               />
               <Text style={styles.rowText}>{item.name}</Text>
-            </View>
+            </TouchableOpacity>
           );
         }}
       />

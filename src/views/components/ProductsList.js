@@ -19,7 +19,6 @@ class ProductsList extends React.Component {
   }
 
   onFireCategoriesUpdated() {
-    console.log('pepe: ' + getProductService().getCategories());
     this.setState({categories: getProductService().getCategories()});
   }
 

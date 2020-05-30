@@ -16,7 +16,7 @@ const AddPanel = props => {
       setIsAdding(false);
       return;
     }
-    let extraComponentError = props.validate();
+    let extraComponentError = props.validate(enteredData);
     if (extraComponentError) {
       Alert.alert(extraComponentError, '', [{text: 'Ok', style: 'cancel'}]);
       return;

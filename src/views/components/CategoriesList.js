@@ -1,7 +1,7 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import ListSection from './ListSection';
 import ColorGrid from './ColorGrid';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Alert} from 'react-native';
 
 import AddPanel from './AddPanel';
 import {getProductService} from '../../services/DependencyResolver';
@@ -11,6 +11,16 @@ const CategoriesList = props => {
     getProductService().getCategories(),
   );
 
+  const handleDeleteCategory = categoryName => {
+    try {
+      getProductService().removeCategory(categoryName);
+      setCategories(getProductService().getCategories());
+      props.onFireCategoriesUpdated();
+    } catch (e) {
+      Alert.alert(e);
+    }
+  };
+
   return (
     <View style={styles.section}>
       <View style={styles.list}>
@@ -19,6 +29,7 @@ const CategoriesList = props => {
           placeholder="Category..."
           items={categories}
           colorResolver={cat => cat.color}
+          deleteRequested={cat => handleDeleteCategory(cat)}
         />
       </View>
       <CategoryAdd
@@ -49,10 +60,13 @@ const CategoryAdd = props => {
       <AddPanel
         placeholder="Category..."
         onSuccessfulSubmit={successfulSubmitHandler}
-        validate={() => {
-          return !color || color.trim().length === 0
-            ? 'Must select a color'
-            : undefined;
+        validate={enteredData => {
+          if (!color || color.trim().length === 0) {
+            return 'Must select a color';
+          }
+          if (getProductService().getCategoryByName(enteredData).length > 0) {
+            return 'Category ' + enteredData + ' already exists';
+          }
         }}
         extraComponent={
           <ColorGrid numColumns={3} onColorSelected={colorSelectedHandler} />
