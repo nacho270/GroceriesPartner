@@ -15,7 +15,7 @@ const ColorGrid = props => {
   const renderItem = data => {
     let currentStyle = [{backgroundColor: data}, styles.gridItem];
     if (data === selected) {
-      currentStyle.push({borderColor: 'orange', borderWidth: 3});
+      currentStyle.push(styles.selectedColor);
     }
     return (
       <View
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 10,
   },
+  selectedColor: {borderColor: 'orange', borderWidth: 3},
 });
 
 export default ColorGrid;

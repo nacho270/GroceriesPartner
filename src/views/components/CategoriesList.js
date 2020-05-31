@@ -6,53 +6,89 @@ import {View, StyleSheet, Alert} from 'react-native';
 import AddPanel from './AddPanel';
 import {getProductService} from '../../services/DependencyResolver';
 
-const CategoriesList = props => {
-  const [categories, setCategories] = useState(
-    getProductService().getCategories(),
-  );
-
-  const handleDeleteCategory = categoryName => {
-    try {
-      getProductService().removeCategory(categoryName);
-      setCategories(getProductService().getCategories());
-      props.onFireCategoriesUpdated();
-    } catch (e) {
-      Alert.alert(e);
-    }
+class CategoriesList extends React.Component {
+  state = {
+    categories: getProductService().getCategories(),
   };
 
-  return (
-    <View style={styles.section}>
-      <View style={styles.list}>
-        <ListSection
-          title="Categories"
-          placeholder="Category..."
-          items={categories}
-          colorResolver={cat => cat.color}
-          deleteRequested={cat => handleDeleteCategory(cat)}
+  render() {
+    const onNewCategory = (name, color) => {
+      getProductService().addNewCategory(name, color);
+      this.setState({
+        categories: getProductService().getCategories(),
+      });
+      this.props.onFireCategoriesUpdated();
+    };
+
+    const deleteCategory = category => {
+      try {
+        getProductService().removeCategory(category.name);
+        this.setState({
+          categories: getProductService().getCategories(),
+        });
+        this.props.onFireCategoriesUpdated();
+      } catch (e) {
+        Alert.alert(e);
+      }
+    };
+
+    const handleDeleteCategory = category => {
+      Alert.alert(
+        'Delete ' + category.name + '?',
+        '',
+        [
+          {
+            text: 'Yes',
+            onPress: () => deleteCategory(category),
+          },
+          {
+            text: 'No',
+            style: 'destructive',
+          },
+        ],
+        {cancelable: false},
+      );
+    };
+
+    return (
+      <View style={styles.section}>
+        <View style={styles.list}>
+          <ListSection
+            title="Categories"
+            placeholder="Category..."
+            items={this.state.categories}
+            colorResolver={cat => cat.color}
+            handlePress={cat => handleDeleteCategory(cat)}
+            handleLongPress={cat => handleDeleteCategory(cat)}
+          />
+        </View>
+        <CategoryAdd
+          onNewCategory={(name, color) => onNewCategory(name, color)}
         />
       </View>
-      <CategoryAdd
-        onUpdatedCategories={() => {
-          setCategories(getProductService().getCategories());
-          props.onFireCategoriesUpdated();
-        }}
-      />
-    </View>
-  );
-};
+    );
+  }
+}
 
 const CategoryAdd = props => {
   const [color, setColor] = useState('');
 
-  const colorSelectedHandler = cc => {
-    setColor(cc);
+  const colorSelectedHandler = selectedColor => {
+    setColor(selectedColor);
   };
 
   const successfulSubmitHandler = data => {
-    getProductService().addNewCategory(data, color);
-    props.onUpdatedCategories();
+    props.onNewCategory(data, color);
     setColor(undefined);
+  };
+
+  const validateCategory = enteredData => {
+    if (!color || color.trim().length === 0) {
+      return 'Must select a color';
+    }
+    if (getProductService().getCategoryByName(enteredData).length > 0) {
+      return 'Category ' + enteredData + ' already exists';
+    }
   };
 
   return (
@@ -60,14 +96,7 @@ const CategoryAdd = props => {
       <AddPanel
         placeholder="Category..."
         onSuccessfulSubmit={successfulSubmitHandler}
-        validate={enteredData => {
-          if (!color || color.trim().length === 0) {
-            return 'Must select a color';
-          }
-          if (getProductService().getCategoryByName(enteredData).length > 0) {
-            return 'Category ' + enteredData + ' already exists';
-          }
-        }}
+        validate={enteredData => validateCategory(enteredData)}
         extraComponent={
           <ColorGrid numColumns={3} onColorSelected={colorSelectedHandler} />
         }

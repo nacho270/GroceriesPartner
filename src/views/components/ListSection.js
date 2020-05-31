@@ -1,26 +1,22 @@
-import React from 'react';
-import {Text, View, StyleSheet, Alert} from 'react-native';
+import React, {useState} from 'react';
+import {Text, View, StyleSheet} from 'react-native';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import Color from '../../shared/Colors';
 
 const ListSection = props => {
-  const handleDelete = name => {
-    console.log('Handle delete: ' + name);
-    Alert.alert(
-      'Delete ' + name + '?',
-      '',
-      [
-        {
-          text: 'Yes',
-          onPress: () => props.deleteRequested(name),
-        },
-        {
-          text: 'No',
-          style: 'destructive',
-        },
-      ],
-      {cancelable: false},
-    );
+  const [currentItem, setCurrentItem] = useState(undefined);
+
+  const styleResolver = item => {
+    let rowStyle = [styles.row];
+    if (
+      props.enableSelection &&
+      currentItem &&
+      item.name === currentItem.name
+    ) {
+      rowStyle.push(styles.selectedRow);
+    }
+
+    return rowStyle;
   };
 
   return (
@@ -28,15 +24,29 @@ const ListSection = props => {
     <View style={styles.list}>
       <Text style={styles.title}>{props.title}</Text>
       <FlatList
-        style={{height: '70%'}}
+        style={styles.flatList}
         data={props.items}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({item: item}) => {
           return (
             <TouchableOpacity
-              style={styles.row}
-              onPress={() => handleDelete(item.name)}
-              onLongPress={() => handleDelete(item.name)}>
+              style={styleResolver(item)}
+              onPress={() => {
+                if (props.enableSelection) {
+                  setCurrentItem(item);
+                }
+                if (props.handlePress) {
+                  props.handlePress(item);
+                }
+              }}
+              onLongPress={() => {
+                if (props.enableSelection) {
+                  setCurrentItem(item);
+                }
+                if (props.handleLongPress) {
+                  props.handleLongPress(item);
+                }
+              }}>
               <View
                 style={{
                   ...styles.rowThumbnail,
@@ -57,6 +67,7 @@ const styles = StyleSheet.create({
   list: {
     width: '100%',
   },
+  flatList: {height: '70%'},
   row: {
     flexDirection: 'row',
     borderColor: Color.row_separator,
@@ -72,6 +83,9 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 10,
     marginLeft: 20,
+  },
+  selectedRow: {
+    backgroundColor: Color.selectedRow,
   },
 });
 

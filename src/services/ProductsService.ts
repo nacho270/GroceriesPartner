@@ -9,6 +9,7 @@ export class ProductService {
   private categories: Category[] = [];
 
   private CATEGORIES_STORAGE_KEY = '@categories';
+  private PRODUCTS_STORAGE_KEY = '@products';
 
   private defaultCategpries: Category[] = [
     new Category('Carniceria', Color.category.red),
@@ -17,7 +18,7 @@ export class ProductService {
 
   constructor(private shoppingListService: ShoppingListService) {
     this.readCategoriesFromStorage();
-
+    this.readProductsFromStorage();
     // let carniceria = new Category('Carniceria', Color.category.red);
     // let verduleria = new Category('Verduleria', Color.category.green);
     // this.categories.push(
@@ -65,7 +66,6 @@ export class ProductService {
         return;
       }
       let categoriesFromStorage = JSON.parse(jsonValue);
-      console.log('Categories from storage: ' + categoriesFromStorage);
       for (var c in categoriesFromStorage) {
         this.categories.push(
           new Category(
@@ -83,6 +83,36 @@ export class ProductService {
     try {
       const jsonValue = JSON.stringify(this.categories);
       await AsyncStorage.setItem(this.CATEGORIES_STORAGE_KEY, jsonValue);
+    } catch (e) {}
+  };
+
+  private readProductsFromStorage = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem(this.PRODUCTS_STORAGE_KEY);
+      if (jsonValue === null) {
+        return;
+      }
+      let productsFromStorage = JSON.parse(jsonValue);
+      for (var c in productsFromStorage) {
+        this.products.push(
+          new Product(
+            productsFromStorage[c].name,
+            new Category(
+              productsFromStorage[c].category.name,
+              productsFromStorage[c].category.color,
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      return;
+    }
+  };
+
+  private storeProducts = async () => {
+    try {
+      const jsonValue = JSON.stringify(this.products);
+      await AsyncStorage.setItem(this.PRODUCTS_STORAGE_KEY, jsonValue);
     } catch (e) {}
   };
 
@@ -125,10 +155,19 @@ export class ProductService {
       throw "Cannot delete the product because it's being used";
     }
     this.products = this.products.filter(p => p.name !== name);
+    this.storeProducts();
   }
 
   addNewProduct(name: string, category: Category) {
+    if (this.getProductByName(name).length > 0) {
+      throw 'Product ' + name + ' already exists';
+    }
     this.products.push(new Product(name, category));
+    this.storeProducts();
+  }
+
+  getProductByName(name: string): Product[] {
+    return this.products.filter(p => p.name === name);
   }
 
   private isCategoryUsedInProduct(categoryName: string): boolean {

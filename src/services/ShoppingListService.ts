@@ -1,4 +1,3 @@
-import {Category} from './../model/Category';
 import {Product} from './../model/Product';
 import {ShoppingListProduct} from './../model/ShoppingListProduct';
 
@@ -6,19 +5,16 @@ export class ShoppingListService {
   private currentList: ShoppingListProduct[] = [];
 
   constructor() {
-    let carniceria = new Category('Carniceria', '#FF0000');
-    let verduleria = new Category('Verduleria', '#00FF00');
-
-    let bife = new Product('Bife', carniceria);
-    let molleja = new Product('Molleja', carniceria);
-    let papa = new Product('Papa', verduleria);
-    let lechuga = new Product('Lechuga', verduleria);
-
-    this.currentList.push(new ShoppingListProduct(bife));
-    this.currentList.push(new ShoppingListProduct(molleja));
-
-    this.currentList.push(new ShoppingListProduct(papa, 0, true));
-    this.currentList.push(new ShoppingListProduct(lechuga));
+    // let carniceria = new Category('Carniceria', '#FF0000');
+    // let verduleria = new Category('Verduleria', '#00FF00');
+    // let bife = new Product('Bife', carniceria);
+    // let molleja = new Product('Molleja', carniceria);
+    // let papa = new Product('Papa', verduleria);
+    // let lechuga = new Product('Lechuga', verduleria);
+    // this.currentList.push(new ShoppingListProduct(bife));
+    // this.currentList.push(new ShoppingListProduct(molleja));
+    // this.currentList.push(new ShoppingListProduct(papa, 0, true));
+    // this.currentList.push(new ShoppingListProduct(lechuga));
   }
 
   isCategoryUsed(categoryName: string) {

@@ -2,6 +2,7 @@ export default {
   separator: '#1c912f',
   row_separator: '#868686',
   add_button: '#509FFF',
+  selectedRow: '#E6E6E6',
 
   category: {
     black: '#000000',
