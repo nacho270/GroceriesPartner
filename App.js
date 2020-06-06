@@ -9,11 +9,11 @@ import {getShoppingListService} from './src/services/DependencyResolver';
 import HomeScreen from './src/views/HomeView';
 import ProductsScreen from './src/views/ProductView';
 import RecipesScreen from './src/views/RecipesView';
-import Colors from './src/shared/Colors';
 
 const Tab = createBottomTabNavigator();
 
 // configre icon tabs: https://github.com/GeekyAnts/NativeBase/issues/72#issuecomment-535892409
+// generate icon with https://github.com/bamlab/react-native-make
 
 function IconWithBadge({name, badgeCount, color, size}) {
   return (
