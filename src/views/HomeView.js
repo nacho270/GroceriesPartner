@@ -1,104 +1,82 @@
 import * as React from 'react';
-import {Text, View, StyleSheet, CheckBox, Platform} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {FlatList, TouchableOpacity, Switch} from 'react-native-gesture-handler';
+import {FlatList} from 'react-native';
 
 import {getShoppingListService} from '../services/DependencyResolver';
 
 export default function HomeScreen() {
+  //
   const [currentListGrouped] = React.useState(
     getShoppingListService().getCurrentShoppingListGroupedByCategory(),
   );
 
-  let aa = [];
-  for (var k in currentListGrouped) {
-    aa.push({cat: k, prods: currentListGrouped[k]});
+  let display = <Text>Your shopping list is empty!</Text>;
+  if (currentListGrouped && currentListGrouped.length > 0) {
+    display = <ShoppingListView shoppingList={currentListGrouped} />;
   }
 
-  // console.log(JSON.stringify(aa));
+  return <SafeAreaView style={styles.screen}>{display}</SafeAreaView>;
+}
 
-  // for (var k in currentListGrouped) {
-  //   for (var p in currentListGrouped[k]) {
-  //     console.log(currentListGrouped[k][p].product.name);
-  //   }
-  // }
-
+const ShoppingListView = props => {
   return (
-    <SafeAreaView>
-      <View style={{flexDirection: 'column', alignContent: 'stretch'}}>
-        <Text style={{alignContent: 'center'}}>Home!</Text>
-        <FlatList
-          style={{width: '100%', height: '100%'}}
-          data={aa}
-          keyExtractor={(_, index) => index.toString()}
-          renderItem={({item}) => {
-            return (
-              <>
-                <CategoryProducts data={item} />
-              </>
-            );
-          }}
-        />
-      </View>
-    </SafeAreaView>
+    <FlatList
+      data={props.shoppingList}
+      keyExtractor={(_, index) => index.toString()}
+      renderItem={({item: item}) => {
+        return <CategoryGroupCard group={item} />;
+      }}
+    />
   );
-}
+};
 
-class CategoryProducts extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    // console.log(JSON.stringify(this.props.data));
-    return (
-      <View>
-        <Text>{this.props.data.cat}</Text>
-        <FlatList
-          style={{padding: 20}}
-          data={this.props.data.prods}
-          keyExtractor={(_, index) => index.toString()}
-          renderItem={({item}) => {
-            if (Platform.OS === 'ios') {
-              let isEnabled = item.product.checked;
-              return (
-                <>
-                  <View style={{flexDirection: 'row', margin: 10}}>
-                    <Switch
-                      trackColor={{
-                        false: '#767577',
-                        true: '#81b0ff',
-                      }}
-                      thumbColor={isEnabled ? '#ff0000' : '#ffffff'}
-                      ios_backgroundColor="#ffffff"
-                      value={isEnabled}
-                    />
-                    <Text style={{fontSize: 25, marginLeft: 5}}>
-                      {item.product.name}
-                    </Text>
-                  </View>
-                </>
-              );
-            } else {
-              <>
-                <View style={{flexDirection: 'row', margin: 10}}>
-                  <CheckBox value={item.product.checked} />
-                  <Text style={{fontSize: 25, marginLeft: 5}}>
-                    {item.product.name}
-                  </Text>
-                </View>
-              </>;
-            }
-          }}
-        />
-      </View>
-    );
-  }
-}
+const CategoryGroupCard = props => {
+  return (
+    <View
+      style={{
+        ...styles.card,
+        borderColor: props.group.category.color,
+      }}>
+      <Text style={styles.title}>{props.group.category.name}</Text>
+      <FlatList
+        data={props.group.products}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({item: item}) => {
+          return <Text>{item.name}</Text>;
+        }}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  centerText: {
+  screen: {
     flex: 1,
-    justifyContent: 'center',
+    padding: 10,
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  card: {
+    borderWidth: 2,
+    width: 300,
+    maxWidth: '100%',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    paddingBottom: 20,
+    paddingTop: 5,
+    borderRadius: 10,
+    marginBottom: 20,
+
+    // shadowColor: 'black',
+    // shadowOffset: {width: 0, height: 2},
+    // shadowRadius: 6,
+    // shadowOpacity: 0.26,
+    // elevation: 8,
   },
 });
