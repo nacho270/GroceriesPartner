@@ -70,10 +70,11 @@ export default function App() {
               return <Ionicons name={iconName} size={size} color={color} />;
             },
           })}
-          tabBarOptions={{
-            activeTintColor: Colors.sky_blue,
-            inactiveTintColor: 'gray',
-          }}>
+          // tabBarOptions={{
+          //   activeTintColor: Colors.sky_blue,
+          //   inactiveTintColor: 'gray',
+          // }}
+        >
           <Tab.Screen name="Shopping list" component={HomeScreen} />
           <Tab.Screen name="Products" component={ProductsScreen} />
           {/* <Tab.Screen name="Recipes" component={RecipesScreen} /> */}

@@ -44,12 +44,20 @@ export default function HomeScreen({navigation}) {
     );
   };
 
+  const onDeletedCheckedProducts = () => {
+    getShoppingListService().removeChecked();
+    setCurrentList(
+      getShoppingListService().getCurrentShoppingListGroupedByCategory(),
+    );
+  };
+
   if (currentList && currentList.length > 0) {
     display = (
       <ShoppingListView
         shoppingList={currentList}
         onDeleteProduct={onDeleteProduct}
         onMarkShoppingItem={onMarkShoppingItem}
+        onDeletedCheckedProducts={onDeletedCheckedProducts}
       />
     );
   }
@@ -59,7 +67,7 @@ export default function HomeScreen({navigation}) {
 
 const ShoppingListView = props => {
   return (
-    <>
+    <View>
       <Text style={styles.mainTitle}>Shopping List</Text>
       <FlatList
         data={props.shoppingList}
@@ -74,7 +82,14 @@ const ShoppingListView = props => {
           );
         }}
       />
-    </>
+      <View>
+        <TouchableOpacity
+          style={styles.deleteCheckedButton}
+          onPress={props.onDeletedCheckedProducts}>
+          <Text style={styles.deleteCheckedText}>Delete checked products</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
@@ -198,4 +213,13 @@ const styles = StyleSheet.create({
   },
   productRowTouch: {width: '100%'},
   productRowText: {fontSize: 16},
+  deleteCheckedButton: {
+    borderColor: Colors.buttonBlue,
+    borderWidth: 1,
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: Colors.buttonBlue,
+    borderRadius: 10,
+  },
+  deleteCheckedText: {color: 'white', fontWeight: 'bold'},
 });

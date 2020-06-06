@@ -6,6 +6,7 @@ export default {
   emtpyList: 'tomato',
   defaultBackground: 'white',
   whiteOverlay: 'rgba(255, 255, 255, 0.9)',
+  buttonBlue: '#0A60FF',
 
   category: {
     black: '#000000',

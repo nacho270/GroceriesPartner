@@ -99,7 +99,7 @@ export class ShoppingListService {
   }
 
   removeChecked() {
-    this.currentList = this.currentList.filter(e => e.checked);
+    this.currentList = this.currentList.filter(e => !e.checked);
     this.storeShoppingList();
   }
 
