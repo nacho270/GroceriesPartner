@@ -5,6 +5,7 @@ export default {
   selectedRow: '#E6E6E6',
   emtpyList: 'tomato',
   defaultBackground: 'white',
+  whiteOverlay: 'rgba(255, 255, 255, 0.9)',
 
   category: {
     black: '#000000',

@@ -1,24 +1,30 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TextInput} from 'react-native-gesture-handler';
-
 import CategoriesList from './components/CategoriesList';
 import ProductsList from './components/ProductsList';
-
 import Color from '../shared/Colors';
+import Overlay from 'react-native-modal-overlay';
+import Colors from '../shared/Colors';
 
 export default function ProductsScreen() {
+  const [showOverlay, setShowOverlay] = React.useState(false);
+
   const onFireCategoriesUpdated = () => {
     this.child.onFireCategoriesUpdated();
   };
 
   const onProductListUpdated = () => {
-    console.log('onProductListUpdated');
+    setShowOverlay(true);
+    setTimeout(function() {
+      setShowOverlay(false);
+    }, 1000);
   };
 
   return (
     <SafeAreaView>
+      <ProductAddedOverlay visible={showOverlay} />
       <TextInput
         placeholder="Search product..."
         style={styles.input}
@@ -27,7 +33,7 @@ export default function ProductsScreen() {
         blurOnSubmit={false}
       />
 
-      <View style={{height: '46%'}}>
+      <View style={styles.productListContainer}>
         <ProductsList
           onRef={ref => (this.child = ref)}
           onProductListUpdated={onProductListUpdated}
@@ -36,12 +42,27 @@ export default function ProductsScreen() {
 
       <View style={styles.separator} />
 
-      <View style={{height: '52%'}}>
+      <View style={styles.categoryListContainer}>
         <CategoriesList onFireCategoriesUpdated={onFireCategoriesUpdated} />
       </View>
     </SafeAreaView>
   );
 }
+
+const ProductAddedOverlay = props => {
+  return (
+    <Overlay
+      visible={props.visible}
+      animationDuration={500}
+      animationType="bounceIn"
+      containerStyle={styles.overlay}
+      closeOnTouchOutside>
+      <View style={styles.overlayView}>
+        <Text style={styles.overlayText}>Added!</Text>
+      </View>
+    </Overlay>
+  );
+};
 
 const styles = StyleSheet.create({
   separator: {
@@ -55,5 +76,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     fontSize: 16,
     padding: 8,
+  },
+  productListContainer: {height: '46%'},
+  categoryListContainer: {height: '52%'},
+  overlay: {backgroundColor: Colors.whiteOverlay},
+  overlayView: {
+    backgroundColor: 'black',
+    borderRadius: 20,
+    padding: 50,
+  },
+  overlayText: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
