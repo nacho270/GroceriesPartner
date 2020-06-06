@@ -13,6 +13,10 @@ export default function ProductsScreen() {
     this.child.onFireCategoriesUpdated();
   };
 
+  const onProductListUpdated = () => {
+    console.log('onProductListUpdated');
+  };
+
   return (
     <SafeAreaView>
       <TextInput
@@ -24,7 +28,10 @@ export default function ProductsScreen() {
       />
 
       <View style={{height: '46%'}}>
-        <ProductsList onRef={ref => (this.child = ref)} />
+        <ProductsList
+          onRef={ref => (this.child = ref)}
+          onProductListUpdated={onProductListUpdated}
+        />
       </View>
 
       <View style={styles.separator} />

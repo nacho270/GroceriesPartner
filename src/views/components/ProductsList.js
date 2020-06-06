@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ListSection from './ListSection';
 import {getProductService} from '../../services/DependencyResolver';
+import {getShoppingListService} from '../../services/DependencyResolver';
 import AddPanel from './AddPanel';
 import {View, StyleSheet, Alert} from 'react-native';
 
@@ -60,6 +61,11 @@ class ProductsList extends React.Component {
       );
     };
 
+    const handleAddToProductList = product => {
+      getShoppingListService().addProduct(product, 0);
+      this.props.onProductListUpdated();
+    };
+
     return (
       <View style={styles.section}>
         <View style={styles.list}>
@@ -70,8 +76,8 @@ class ProductsList extends React.Component {
               prod.name.includes(this.state.filter),
             )}
             colorResolver={prod => prod.category.color}
-            handlePress={prod => console.log('Long press: ' + prod)}
-            handleLongPress={prod => handleDeleteProduct(prod)}
+            handlePress={handleAddToProductList}
+            handleLongPress={handleDeleteProduct}
           />
         </View>
         <ProductAdd
