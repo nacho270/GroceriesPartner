@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import {Text, View, StyleSheet, FlatList} from 'react-native';
+import {TouchableOpacity} from 'react-native'; //react-native-gesture-handler
 import Color from '../../shared/Colors';
 
 const ListSection = props => {

@@ -3,6 +3,8 @@ export default {
   row_separator: '#868686',
   add_button: '#509FFF',
   selectedRow: '#E6E6E6',
+  emtpyList: 'tomato',
+  defaultBackground: 'white',
 
   category: {
     black: '#000000',

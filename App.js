@@ -1,9 +1,10 @@
 import React from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, View, Text, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {getShoppingListService} from './src/services/DependencyResolver';
 
 import HomeScreen from './src/views/HomeView';
 import ProductsScreen from './src/views/ProductView';
@@ -13,6 +14,29 @@ import Colors from './src/shared/Colors';
 const Tab = createBottomTabNavigator();
 
 // configre icon tabs: https://github.com/GeekyAnts/NativeBase/issues/72#issuecomment-535892409
+
+function IconWithBadge({name, badgeCount, color, size}) {
+  return (
+    <View style={styles.badgeWrapper}>
+      <Ionicons name={name} size={size} color={color} />
+      {badgeCount > 0 && (
+        <View style={styles.badgePlacement}>
+          <Text style={styles.badge}>{badgeCount}</Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
+function ShoppingListWithBadge(props) {
+  let currentShoppingList = getShoppingListService().getCurrentShoppingList();
+  let badges = 0;
+  if (currentShoppingList && currentShoppingList.length > 0) {
+    badges = currentShoppingList.length;
+  }
+
+  return <IconWithBadge {...props} badgeCount={badges} />;
+}
 
 export default function App() {
   return (
@@ -28,10 +52,20 @@ export default function App() {
                 iconName = focused
                   ? 'ios-information-circle'
                   : 'ios-information-circle-outline';
-              } else if (route.name === 'Current list') {
+              } else if (route.name === 'Shopping list') {
                 iconName = focused ? 'ios-list-box' : 'ios-list';
+                return (
+                  <ShoppingListWithBadge
+                    name={
+                      focused
+                        ? 'ios-information-circle'
+                        : 'ios-information-circle-outline'
+                    }
+                    size={size}
+                    color={color}
+                  />
+                );
               }
-
               // You can return any component that you like here!
               return <Ionicons name={iconName} size={size} color={color} />;
             },
@@ -40,7 +74,7 @@ export default function App() {
             activeTintColor: Colors.sky_blue,
             inactiveTintColor: 'gray',
           }}>
-          <Tab.Screen name="Current list" component={HomeScreen} />
+          <Tab.Screen name="Shopping list" component={HomeScreen} />
           <Tab.Screen name="Products" component={ProductsScreen} />
           {/* <Tab.Screen name="Recipes" component={RecipesScreen} /> */}
         </Tab.Navigator>
@@ -48,3 +82,19 @@ export default function App() {
     </SafeAreaProvider>
   );
 }
+const styles = StyleSheet.create({
+  badgeWrapper: {width: 24, height: 24, margin: 5},
+  badgePlacement: {
+    // On React Native < 0.57 overflow outside of parent will not work on Android, see https://git.io/fhLJ8
+    position: 'absolute',
+    right: -6,
+    top: -3,
+    backgroundColor: 'red',
+    borderRadius: 6,
+    width: 13,
+    height: 13,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  badge: {color: 'white', fontSize: 10, fontWeight: 'bold', marginLeft: 1},
+});
