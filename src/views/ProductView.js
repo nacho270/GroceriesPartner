@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, TextInput} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {TextInput} from 'react-native-gesture-handler';
 import CategoriesList from './components/CategoriesList';
 import ProductsList from './components/ProductsList';
 import Color from '../shared/Colors';
@@ -77,8 +76,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 8,
   },
-  productListContainer: {height: '46%'},
-  categoryListContainer: {height: '52%'},
+  productListContainer: {height: '45%'},
+  categoryListContainer: {height: '47%'},
   overlay: {backgroundColor: Colors.whiteOverlay},
   overlayView: {
     backgroundColor: 'black',

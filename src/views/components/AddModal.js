@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Button, Modal} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
+import {View, StyleSheet, Button, Modal, TextInput} from 'react-native';
 
 import Color from '../../shared/Colors';
 
@@ -84,8 +83,9 @@ const styles = StyleSheet.create({
   },
   modalButtonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
+    width: '40%',
   },
 });
 

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Text, View, StyleSheet, Alert} from 'react-native';
+import {Text, View, StyleSheet, Alert, TouchableOpacity} from 'react-native';
 import Color from '../../shared/Colors';
 import AddModal from './AddModal';
 
