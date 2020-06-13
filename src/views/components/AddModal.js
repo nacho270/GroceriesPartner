@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Button, Modal, TextInput} from 'react-native';
+import {translate} from '../../lang/language';
 
 import Color from '../../shared/Colors';
 
@@ -37,8 +38,11 @@ const AddModal = props => {
           {props.extraComponent}
         </View>
         <View style={styles.modalButtonsContainer}>
-          <Button title="Add" onPress={() => handleSubmit(data)} />
-          <Button title="Cancel" onPress={handleCancel} />
+          <Button
+            title={translate('ADDMODAL_add')}
+            onPress={() => handleSubmit(data)}
+          />
+          <Button title={translate('ADDMODAL_cancel')} onPress={handleCancel} />
         </View>
       </View>
     </Modal>

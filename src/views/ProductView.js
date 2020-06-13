@@ -6,6 +6,7 @@ import Color from '../shared/Colors';
 import Overlay from 'react-native-modal-overlay';
 import Colors from '../shared/Colors';
 import {getProductService} from '../services/DependencyResolver';
+import {translate} from '../lang/language';
 
 export default function ProductsScreen() {
   const [showOverlay, setShowOverlay] = React.useState(false);
@@ -29,7 +30,7 @@ export default function ProductsScreen() {
         <ProductAddedOverlay visible={showOverlay} />
         <TextInput
           style={styles.input}
-          placeholder="Search product..."
+          placeholder={translate('PRODUCTVIEW_searchProduct')}
           maxLength={30}
           onChangeText={value => this.child.setFilter(value)}
           blurOnSubmit={false}
@@ -61,7 +62,7 @@ const ProductAddedOverlay = props => {
       containerStyle={styles.overlay}
       closeOnTouchOutside>
       <View style={styles.overlayView}>
-        <Text style={styles.overlayText}>Added!</Text>
+        <Text style={styles.overlayText}>{translate('PRODUCTVIEW_added')}</Text>
       </View>
     </Overlay>
   );

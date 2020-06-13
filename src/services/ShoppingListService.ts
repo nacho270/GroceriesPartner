@@ -10,16 +10,6 @@ export class ShoppingListService {
   constructor() {
     this.readShoppingListFromStorage();
     // this.storeShoppingList();
-    // let carniceria = new Category('Carniceria', '#FF0000');
-    // let verduleria = new Category('Verduleria', '#00FF00');
-    // let bife = new Product('Bife', carniceria);
-    // let molleja = new Product('Molleja', carniceria);
-    // let papa = new Product('Papa', verduleria);
-    // let lechuga = new Product('Lechuga', verduleria);
-    // this.currentList.push(new ShoppingListProduct(bife, carniceria));
-    // this.currentList.push(new ShoppingListProduct(molleja, carniceria));
-    // this.currentList.push(new ShoppingListProduct(papa, verduleria, 0, true));
-    // this.currentList.push(new ShoppingListProduct(lechuga, verduleria));
   }
 
   private readShoppingListFromStorage = async () => {

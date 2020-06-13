@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import ListSection from './ListSection';
 import ColorGrid from './ColorGrid';
 import {View, StyleSheet, Alert} from 'react-native';
+import {translate} from '../../lang/language';
 
 import AddPanel from './AddPanel';
 import {getProductService} from '../../services/DependencyResolver';
@@ -37,15 +38,17 @@ class CategoriesList extends React.Component {
 
     const handleDeleteCategory = category => {
       Alert.alert(
-        'Delete ' + category.name + '?',
+        translate('CATEGORIESLIST_deleteCategory', {
+          category: category.name,
+        }),
         '',
         [
           {
-            text: 'Yes',
+            text: translate('GENERAL_yes'),
             onPress: () => deleteCategory(category),
           },
           {
-            text: 'No',
+            text: translate('GENERAL_no'),
             style: 'destructive',
           },
         ],
@@ -57,8 +60,8 @@ class CategoriesList extends React.Component {
       <View style={styles.section}>
         <View style={styles.list}>
           <ListSection
-            title="Categories"
-            placeholder="Category..."
+            title={translate('CATEGORIESLIST_title')}
+            placeholder={translate('CATEGORIESLIST_placeholder')}
             items={this.state.categories}
             colorResolver={cat => cat.color}
             handlePress={cat => this.props.onSelectedCategory(cat)}
@@ -88,17 +91,19 @@ const CategoryAdd = props => {
 
   const validateCategory = enteredData => {
     if (!color || color.trim().length === 0) {
-      return 'Must select a color';
+      return translate('CATEGORIESLIST_mustSelectColor');
     }
     if (getProductService().getCategoryByName(enteredData).length > 0) {
-      return 'Category ' + enteredData + ' already exists';
+      return translate('CATEGORIESLIST_categoryAlreadyExists', {
+        category: enteredData,
+      });
     }
   };
 
   return (
     <View style={styles.add}>
       <AddPanel
-        placeholder="Category..."
+        placeholder={translate('CATEGORIESLIST_placeholder')}
         onSuccessfulSubmit={successfulSubmitHandler}
         validate={enteredData => validateCategory(enteredData)}
         extraComponent={

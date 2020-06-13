@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {FlatList, TouchableOpacity} from 'react-native';
 import {getShoppingListService} from '../services/DependencyResolver';
 import Colors from '../shared/Colors';
+import {translate} from '../lang/language';
 
 export default function HomeScreen({navigation}) {
   //
@@ -23,7 +24,9 @@ export default function HomeScreen({navigation}) {
   }, [navigation]);
 
   let display = (
-    <Text style={{color: Colors.emptyList}}>Your shopping list is empty!</Text>
+    <Text style={{color: Colors.emptyList}}>
+      {translate('SHOPPINGLIST_empty')}
+    </Text>
   );
 
   const onDeleteProduct = product => {
@@ -69,6 +72,8 @@ const ShoppingListView = props => {
   return (
     <View>
       <Text style={styles.mainTitle}>Shopping List</Text>
+      <Text style={styles.subtitle}>{translate('GENERAL_longPress')}</Text>
+
       <FlatList
         data={props.shoppingList}
         keyExtractor={(_, index) => index.toString()}
@@ -86,7 +91,9 @@ const ShoppingListView = props => {
         <TouchableOpacity
           style={styles.deleteCheckedButton}
           onPress={props.onDeletedCheckedProducts}>
-          <Text style={styles.deleteCheckedText}>Delete checked products</Text>
+          <Text style={styles.deleteCheckedText}>
+            {translate('SHOPPINGLIST_removeCheckedProducts')}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -129,15 +136,15 @@ const ProductRow = props => {
 
   const onDeleteRow = product => {
     Alert.alert(
-      'Delete ' + product.name + '?',
+      translate('SHOPPINGLIST_removeProduct', {product: product.name}),
       '',
       [
         {
-          text: 'Yes',
+          text: translate('GENERAL_yes'),
           onPress: () => deleteProduct(product),
         },
         {
-          text: 'No',
+          text: translate('GENERAL_no'),
           style: 'destructive',
         },
       ],
@@ -173,7 +180,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.defaultBackground,
   },
   mainTitle: {
-    padding: 20,
+    paddingTop: 10,
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -182,6 +189,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 20,
     marginBottom: 10,
+  },
+  subtitle: {
+    paddingTop: 5,
+    paddingBottom: 20,
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: 'gray',
+    textAlign: 'center',
   },
   card: {
     borderWidth: 2,

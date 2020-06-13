@@ -2,13 +2,16 @@ import React, {useState} from 'react';
 import {Text, View, StyleSheet, Alert, TouchableOpacity} from 'react-native';
 import Color from '../../shared/Colors';
 import AddModal from './AddModal';
+import {translate} from '../../lang/language';
 
 const AddPanel = props => {
   const [isAdding, setIsAdding] = useState(false);
 
   const addItemHandler = enteredData => {
     if (!enteredData || enteredData.trim().length === 0) {
-      Alert.alert('You must enter a name', '', [{text: 'Ok', style: 'cancel'}]);
+      Alert.alert(translate('ADDPANEL_mustEnterName'), '', [
+        {text: translate('GENERAL_ok'), style: 'cancel'},
+      ]);
       return false;
     }
     if (!props.validate) {
@@ -17,7 +20,9 @@ const AddPanel = props => {
     }
     let extraComponentError = props.validate(enteredData);
     if (extraComponentError) {
-      Alert.alert(extraComponentError, '', [{text: 'Ok', style: 'cancel'}]);
+      Alert.alert(extraComponentError, '', [
+        {text: translate('GENERAL_ok'), style: 'cancel'},
+      ]);
       return false;
     }
 

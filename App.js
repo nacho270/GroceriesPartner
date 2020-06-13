@@ -5,6 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getShoppingListService} from './src/services/DependencyResolver';
+import {translate} from './src/lang/language';
 
 import HomeScreen from './src/views/HomeView';
 import ProductsScreen from './src/views/ProductView';
@@ -70,12 +71,12 @@ export default function App() {
           // }}
         >
           <Tab.Screen
-            name="Shopping list"
+            name={translate('MENU_shoppingList')}
             initialParams={{name: 'Shopping list'}}
             component={HomeScreen}
           />
           <Tab.Screen
-            name="Products"
+            name={translate('MENU_products')}
             initialParams={{name: 'Products'}}
             component={ProductsScreen}
           />

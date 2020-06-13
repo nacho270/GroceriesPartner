@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
-import {TouchableOpacity} from 'react-native'; //react-native-gesture-handler
+import {TouchableOpacity} from 'react-native';
 import Color from '../../shared/Colors';
+import {translate} from '../../lang/language';
 
 const ListSection = props => {
   const [currentItem, setCurrentItem] = useState(undefined);
@@ -20,9 +21,9 @@ const ListSection = props => {
   };
 
   return (
-    // <View style={{...styles.list, ...props.styles}}>
     <View style={styles.list}>
       <Text style={styles.title}>{props.title}</Text>
+      <Text style={styles.subtitle}>{translate('GENERAL_longPress')}</Text>
       <FlatList
         style={styles.flatList}
         data={props.items}
@@ -63,7 +64,20 @@ const ListSection = props => {
 };
 
 const styles = StyleSheet.create({
-  title: {padding: 20, fontSize: 25, fontWeight: 'bold', textAlign: 'center'},
+  title: {
+    paddingTop: 20,
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  subtitle: {
+    paddingTop: 5,
+    paddingBottom: 10,
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: 'gray',
+    textAlign: 'center',
+  },
   list: {
     width: '100%',
   },

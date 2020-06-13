@@ -6,6 +6,7 @@ import AddPanel from './AddPanel';
 import {View, StyleSheet, Alert, Text} from 'react-native';
 import CategoriesList from './CategoriesList';
 import Colors from '../../shared/Colors';
+import {translate} from '../../lang/language';
 
 class ProductsList extends React.Component {
   state = {
@@ -30,7 +31,7 @@ class ProductsList extends React.Component {
     let display = (
       <View style={styles.noproducts}>
         <Text style={{color: Colors.emptyList}}>
-          Add some products with the + button!
+          {translate('PRODUCTLIST_empty')}
         </Text>
       </View>
     );
@@ -57,15 +58,15 @@ class ProductsList extends React.Component {
 
     const handleDeleteProduct = product => {
       Alert.alert(
-        'Delete ' + product.name + '?',
+        translate('PRODUCTLIST_deleteProduct', {product: product.name}),
         '',
         [
           {
-            text: 'Yes',
+            text: translate('GENERAL_yes'),
             onPress: () => deleteProduct(product),
           },
           {
-            text: 'No',
+            text: translate('GENERAL_no'),
             style: 'destructive',
           },
         ],
@@ -82,8 +83,8 @@ class ProductsList extends React.Component {
       display = (
         <View style={styles.list}>
           <ListSection
-            title="Products"
-            placeholder="Product..."
+            title={translate('PRODUCTLIST_title')}
+            placeholder={translate('PRODUCTLIST_placeholder')}
             items={products.filter(prod =>
               prod.name.includes(this.state.filter),
             )}
@@ -120,17 +121,19 @@ const ProductAdd = props => {
 
   const validateProduct = enteredData => {
     if (!category) {
-      return 'Must pick a category';
+      return translate('PRODUCTLIST_mustPickCategory');
     }
     if (getProductService().getProductByName(enteredData).length > 0) {
-      return 'Product ' + enteredData + ' already exists';
+      return translate('PRODUCTLIST_productAlreadyExists', {
+        product: enteredData,
+      });
     }
   };
 
   return (
     <View style={styles.add}>
       <AddPanel
-        placeholder="Product..."
+        placeholder={translate('PRODUCTLIST_placeholder')}
         onSuccessfulSubmit={successfulSubmitHandler}
         validate={enteredData => validateProduct(enteredData)}
         extraComponent={
