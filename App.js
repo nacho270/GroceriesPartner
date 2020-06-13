@@ -47,25 +47,19 @@ export default function App() {
           screenOptions={({route}) => ({
             tabBarIcon: ({focused, color, size}) => {
               let iconName;
-
-              if (route.name === 'Products') {
-                iconName = focused
-                  ? 'ios-information-circle'
-                  : 'ios-information-circle-outline';
-              } else if (route.name === 'Shopping list') {
+              if (route.params.name === 'Shopping list') {
                 iconName = focused ? 'ios-list-box' : 'ios-list';
                 return (
                   <ShoppingListWithBadge
-                    name={
-                      focused
-                        ? 'ios-information-circle'
-                        : 'ios-information-circle-outline'
-                    }
+                    name={iconName}
                     size={size}
                     color={color}
                   />
                 );
               }
+              iconName = focused
+                ? 'ios-information-circle'
+                : 'ios-information-circle-outline';
               // You can return any component that you like here!
               return <Ionicons name={iconName} size={size} color={color} />;
             },
@@ -75,8 +69,16 @@ export default function App() {
           //   inactiveTintColor: 'gray',
           // }}
         >
-          <Tab.Screen name="Shopping list" component={HomeScreen} />
-          <Tab.Screen name="Products" component={ProductsScreen} />
+          <Tab.Screen
+            name="Shopping list"
+            initialParams={{name: 'Shopping list'}}
+            component={HomeScreen}
+          />
+          <Tab.Screen
+            name="Products"
+            initialParams={{name: 'Products'}}
+            component={ProductsScreen}
+          />
           {/* <Tab.Screen name="Recipes" component={RecipesScreen} /> */}
         </Tab.Navigator>
       </NavigationContainer>

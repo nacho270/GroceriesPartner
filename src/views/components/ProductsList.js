@@ -40,6 +40,7 @@ class ProductsList extends React.Component {
     const onNewProduct = (name, category) => {
       getProductService().addNewProduct(name, category);
       this.setState({products: getProductService().getProducts()});
+      this.props.onNewProduct();
     };
 
     const deleteProduct = product => {
@@ -48,6 +49,7 @@ class ProductsList extends React.Component {
         this.setState({
           products: getProductService().getProducts(),
         });
+        this.props.onProductDelete();
       } catch (e) {
         Alert.alert(e);
       }

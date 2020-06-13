@@ -9,16 +9,20 @@ import {getProductService} from '../services/DependencyResolver';
 
 export default function ProductsScreen() {
   const [showOverlay, setShowOverlay] = React.useState(false);
-
+  const [products, setProducts] = React.useState(
+    getProductService().getProducts(),
+  );
   const onProductListUpdated = () => {
     setShowOverlay(true);
     setTimeout(function() {
       setShowOverlay(false);
     }, 1000);
   };
+  const updateProductList = () => {
+    setProducts(getProductService().getProducts());
+  };
 
   let display;
-  let products = getProductService().getProducts();
   if (products && products.length > 0) {
     display = (
       <>
@@ -40,6 +44,8 @@ export default function ProductsScreen() {
         <ProductsList
           onRef={ref => (this.child = ref)}
           onProductListUpdated={onProductListUpdated}
+          onProductDelete={updateProductList}
+          onNewProduct={updateProductList}
         />
       </View>
     </SafeAreaView>
