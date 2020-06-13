@@ -5,6 +5,7 @@ import ProductsList from './components/ProductsList';
 import Color from '../shared/Colors';
 import Overlay from 'react-native-modal-overlay';
 import Colors from '../shared/Colors';
+import {getProductService} from '../services/DependencyResolver';
 
 export default function ProductsScreen() {
   const [showOverlay, setShowOverlay] = React.useState(false);
@@ -16,17 +17,25 @@ export default function ProductsScreen() {
     }, 1000);
   };
 
+  let display;
+  let products = getProductService().getProducts();
+  if (products && products.length > 0) {
+    display = (
+      <>
+        <ProductAddedOverlay visible={showOverlay} />
+        <TextInput
+          style={styles.input}
+          placeholder="Search product..."
+          maxLength={30}
+          onChangeText={value => this.child.setFilter(value)}
+          blurOnSubmit={false}
+        />
+      </>
+    );
+  }
   return (
-    <SafeAreaView>
-      <ProductAddedOverlay visible={showOverlay} />
-      <TextInput
-        style={styles.input}
-        placeholder="Search product..."
-        maxLength={30}
-        onChangeText={value => this.child.setFilter(value)}
-        blurOnSubmit={false}
-      />
-
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.content}>{display}</View>
       <View style={styles.productListContainer}>
         <ProductsList
           onRef={ref => (this.child = ref)}
@@ -53,13 +62,20 @@ const ProductAddedOverlay = props => {
 };
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: Colors.defaultBackground,
+    flex: 16,
+  },
+  content: {
+    flex: 1,
+  },
   input: {
     borderBottomColor: Color.separator,
     borderBottomWidth: 1,
     fontSize: 16,
     padding: 8,
   },
-  productListContainer: {height: '90%'},
+  productListContainer: {backgroundColor: Colors.whiteOverlay, flex: 15},
   overlay: {backgroundColor: Colors.whiteOverlay},
   overlayView: {
     backgroundColor: 'black',

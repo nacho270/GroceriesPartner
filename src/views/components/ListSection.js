@@ -78,6 +78,8 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 20,
+    borderColor: Color.thumbnailBorder,
+    borderWidth: 1,
   },
   rowText: {
     width: '100%',

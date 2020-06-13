@@ -3,8 +3,9 @@ import ListSection from './ListSection';
 import {getProductService} from '../../services/DependencyResolver';
 import {getShoppingListService} from '../../services/DependencyResolver';
 import AddPanel from './AddPanel';
-import {View, StyleSheet, Alert} from 'react-native';
+import {View, StyleSheet, Alert, Text} from 'react-native';
 import CategoriesList from './CategoriesList';
+import Colors from '../../shared/Colors';
 
 class ProductsList extends React.Component {
   state = {
@@ -26,6 +27,14 @@ class ProductsList extends React.Component {
   }
 
   render() {
+    let display = (
+      <View style={styles.noproducts}>
+        <Text style={{color: Colors.emptyList}}>
+          Add some products with the + button!
+        </Text>
+      </View>
+    );
+
     const {products} = this.state;
 
     const onNewProduct = (name, category) => {
@@ -67,8 +76,8 @@ class ProductsList extends React.Component {
       this.props.onProductListUpdated();
     };
 
-    return (
-      <View style={styles.section}>
+    if (products && products.length > 0) {
+      display = (
         <View style={styles.list}>
           <ListSection
             title="Products"
@@ -81,6 +90,12 @@ class ProductsList extends React.Component {
             handleLongPress={handleDeleteProduct}
           />
         </View>
+      );
+    }
+
+    return (
+      <View style={styles.section}>
+        {display}
         <ProductAdd
           onNewProduct={(name, category) => onNewProduct(name, category)}
         />
@@ -123,13 +138,6 @@ const ProductAdd = props => {
               onSelectedCategory={cat => setCategory(cat)}
             />
           </View>
-          // <ListSection
-          //   title="Categories"
-          //   items={getProductService().getCategories()}
-          //   colorResolver={cat => cat.color}
-          //   handlePress={cat => categorySelectedHandler(cat)}
-          //   enableSelection
-          // />
         }
       />
     </View>
@@ -137,8 +145,21 @@ const ProductAdd = props => {
 };
 
 const styles = StyleSheet.create({
-  section: {},
+  section: {flex: 10},
   list: {minHeight: '90%'},
+  noproducts: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.whiteOverlay,
+  },
+  add: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    backgroundColor: Colors.whiteOverlay,
+  },
   categoryListContainer: {height: '100%'},
 });
 

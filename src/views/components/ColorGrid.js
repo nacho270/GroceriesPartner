@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     margin: 10,
+    borderWidth: 1,
+    borderColor: Color.thumbnailBorder,
   },
   selectedColor: {borderColor: 'orange', borderWidth: 3},
 });
