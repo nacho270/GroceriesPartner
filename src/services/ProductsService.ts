@@ -10,8 +10,9 @@ export class ProductService {
 
   private CATEGORIES_STORAGE_KEY = '@categories';
   private PRODUCTS_STORAGE_KEY = '@products';
+  private FIRST_BOOT = '@firstboot';
 
-  private defaultCategpries: Category[] = [
+  private defaultCategories: Category[] = [
     new Category('Carniceria', Color.category.red),
     new Category('Verduleria', Color.category.green),
   ];
@@ -19,6 +20,9 @@ export class ProductService {
   constructor(private shoppingListService: ShoppingListService) {
     this.readCategoriesFromStorage();
     this.readProductsFromStorage();
+
+    // this.storeCategories();
+    // this.storeProducts();
     // let carniceria = new Category('Carniceria', Color.category.red);
     // let verduleria = new Category('Verduleria', Color.category.green);
     // this.categories.push(
@@ -62,21 +66,16 @@ export class ProductService {
   private readCategoriesFromStorage = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem(this.CATEGORIES_STORAGE_KEY);
-      if (jsonValue === null) {
+      const firstBoot = await AsyncStorage.getItem(this.FIRST_BOOT);
+      if (firstBoot !== null && jsonValue === null) {
         return;
       }
-      let categoriesFromStorage = JSON.parse(jsonValue);
-      for (var c in categoriesFromStorage) {
-        this.categories.push(
-          new Category(
-            categoriesFromStorage[c].name,
-            categoriesFromStorage[c].color,
-          ),
-        );
+      if (firstBoot === null) {
+        await this.loadDefaultCategories();
+      } else {
+        this.loadCategories(JSON.parse(jsonValue));
       }
-    } catch (e) {
-      return;
-    }
+    } catch (e) {}
   };
 
   private storeCategories = async () => {
@@ -104,9 +103,7 @@ export class ProductService {
           ),
         );
       }
-    } catch (e) {
-      return;
-    }
+    } catch (e) {}
   };
 
   private storeProducts = async () => {
@@ -115,6 +112,20 @@ export class ProductService {
       await AsyncStorage.setItem(this.PRODUCTS_STORAGE_KEY, jsonValue);
     } catch (e) {}
   };
+
+  private loadCategories(categoriesToLoad: Category[]) {
+    for (var c in categoriesToLoad) {
+      this.categories.push(
+        new Category(categoriesToLoad[c].name, categoriesToLoad[c].color),
+      );
+    }
+  }
+
+  private async loadDefaultCategories() {
+    this.loadCategories(this.defaultCategories);
+    this.storeCategories();
+    await AsyncStorage.setItem(this.FIRST_BOOT, 'false');
+  }
 
   getProducts() {
     return this.products
