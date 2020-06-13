@@ -52,7 +52,12 @@ const AddPanel = props => {
 };
 
 const styles = StyleSheet.create({
-  addButtonContainer: {flexDirection: 'row-reverse', marginLeft: 20},
+  addButtonContainer: {
+    flexDirection: 'row-reverse',
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+  },
   addButton: {
     height: 50,
     width: 50,
