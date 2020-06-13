@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text, TextInput} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import CategoriesList from './components/CategoriesList';
 import ProductsList from './components/ProductsList';
 import Color from '../shared/Colors';
 import Overlay from 'react-native-modal-overlay';
@@ -9,10 +8,6 @@ import Colors from '../shared/Colors';
 
 export default function ProductsScreen() {
   const [showOverlay, setShowOverlay] = React.useState(false);
-
-  const onFireCategoriesUpdated = () => {
-    this.child.onFireCategoriesUpdated();
-  };
 
   const onProductListUpdated = () => {
     setShowOverlay(true);
@@ -25,8 +20,8 @@ export default function ProductsScreen() {
     <SafeAreaView>
       <ProductAddedOverlay visible={showOverlay} />
       <TextInput
-        placeholder="Search product..."
         style={styles.input}
+        placeholder="Search product..."
         maxLength={30}
         onChangeText={value => this.child.setFilter(value)}
         blurOnSubmit={false}
@@ -37,12 +32,6 @@ export default function ProductsScreen() {
           onRef={ref => (this.child = ref)}
           onProductListUpdated={onProductListUpdated}
         />
-      </View>
-
-      <View style={styles.separator} />
-
-      <View style={styles.categoryListContainer}>
-        <CategoriesList onFireCategoriesUpdated={onFireCategoriesUpdated} />
       </View>
     </SafeAreaView>
   );
@@ -64,20 +53,13 @@ const ProductAddedOverlay = props => {
 };
 
 const styles = StyleSheet.create({
-  separator: {
-    width: '100%',
-    height: '2%',
-    borderBottomColor: Color.separator,
-    borderBottomWidth: 4,
-  },
   input: {
     borderBottomColor: Color.separator,
     borderBottomWidth: 1,
     fontSize: 16,
     padding: 8,
   },
-  productListContainer: {height: '45%'},
-  categoryListContainer: {height: '47%'},
+  productListContainer: {height: '90%'},
   overlay: {backgroundColor: Colors.whiteOverlay},
   overlayView: {
     backgroundColor: 'black',

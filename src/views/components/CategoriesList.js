@@ -7,6 +7,9 @@ import AddPanel from './AddPanel';
 import {getProductService} from '../../services/DependencyResolver';
 
 class CategoriesList extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     categories: getProductService().getCategories(),
   };
@@ -58,8 +61,9 @@ class CategoriesList extends React.Component {
             placeholder="Category..."
             items={this.state.categories}
             colorResolver={cat => cat.color}
-            handlePress={cat => handleDeleteCategory(cat)}
+            handlePress={cat => this.props.onSelectedCategory(cat)}
             handleLongPress={cat => handleDeleteCategory(cat)}
+            enableSelection
           />
         </View>
         <CategoryAdd

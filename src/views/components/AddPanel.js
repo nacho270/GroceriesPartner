@@ -9,20 +9,21 @@ const AddPanel = props => {
   const addItemHandler = enteredData => {
     if (!enteredData || enteredData.trim().length === 0) {
       Alert.alert('You must enter a name', '', [{text: 'Ok', style: 'cancel'}]);
-      return;
+      return false;
     }
     if (!props.validate) {
       setIsAdding(false);
-      return;
+      return false;
     }
     let extraComponentError = props.validate(enteredData);
     if (extraComponentError) {
       Alert.alert(extraComponentError, '', [{text: 'Ok', style: 'cancel'}]);
-      return;
+      return false;
     }
 
     setIsAdding(false);
     props.onSuccessfulSubmit(enteredData);
+    return true;
   };
 
   return (

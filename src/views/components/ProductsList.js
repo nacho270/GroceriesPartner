@@ -4,6 +4,7 @@ import {getProductService} from '../../services/DependencyResolver';
 import {getShoppingListService} from '../../services/DependencyResolver';
 import AddPanel from './AddPanel';
 import {View, StyleSheet, Alert} from 'react-native';
+import CategoriesList from './CategoriesList';
 
 class ProductsList extends React.Component {
   state = {
@@ -91,7 +92,7 @@ class ProductsList extends React.Component {
 const ProductAdd = props => {
   const [category, setCategory] = useState(undefined);
 
-  const categorySelectedHandler = selectedCategory => {
+  const onFireCategoriesUpdated = selectedCategory => {
     setCategory(selectedCategory);
   };
 
@@ -116,13 +117,19 @@ const ProductAdd = props => {
         onSuccessfulSubmit={successfulSubmitHandler}
         validate={enteredData => validateProduct(enteredData)}
         extraComponent={
-          <ListSection
-            title="Categories"
-            items={getProductService().getCategories()}
-            colorResolver={cat => cat.color}
-            handlePress={cat => categorySelectedHandler(cat)}
-            enableSelection
-          />
+          <View style={styles.categoryListContainer}>
+            <CategoriesList
+              onFireCategoriesUpdated={onFireCategoriesUpdated}
+              onSelectedCategory={cat => setCategory(cat)}
+            />
+          </View>
+          // <ListSection
+          //   title="Categories"
+          //   items={getProductService().getCategories()}
+          //   colorResolver={cat => cat.color}
+          //   handlePress={cat => categorySelectedHandler(cat)}
+          //   enableSelection
+          // />
         }
       />
     </View>
@@ -130,9 +137,9 @@ const ProductAdd = props => {
 };
 
 const styles = StyleSheet.create({
-  section: {flex: 7},
-  list: {flex: 6},
-  add: {flex: 1},
+  section: {},
+  list: {minHeight: '90%'},
+  categoryListContainer: {height: '100%'},
 });
 
 export default ProductsList;

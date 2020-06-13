@@ -10,26 +10,35 @@ const AddModal = props => {
   };
 
   const handleSubmit = enteredData => {
-    props.onAdd(enteredData);
+    let addedOk = props.onAdd(enteredData);
+    if (addedOk) {
+      setData(undefined);
+    }
+  };
+
+  const handleCancel = () => {
     setData(undefined);
+    props.onCancel();
   };
 
   return (
     <Modal visible={props.visible} animationType="slide">
       <View style={styles.modalContainer}>
         <TextInput
-          placeholder={props.placeholder}
+          clearButtonMode="always"
           style={styles.modalTextInput}
+          placeholder={props.placeholder}
           maxLength={30}
-          // autoFocus={true}
+          autoFocus={true}
           onChangeText={onEnteredData}
+          value={data}
         />
         <View style={styles.modalExtraComponenContainer}>
           {props.extraComponent}
         </View>
         <View style={styles.modalButtonsContainer}>
           <Button title="Add" onPress={() => handleSubmit(data)} />
-          <Button title="Cancel" onPress={props.onCancel.bind(this, null)} />
+          <Button title="Cancel" onPress={handleCancel} />
         </View>
       </View>
     </Modal>
@@ -76,10 +85,13 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   modalExtraComponenContainer: {
-    minHeight: '30%',
+    minHeight: '40%',
     maxHeight: '50%',
     width: '80%',
+    marginTop: 20,
     marginBottom: 20,
+    borderBottomColor: 'gray',
+    borderBottomWidth: 1,
   },
   modalButtonsContainer: {
     flexDirection: 'row',
