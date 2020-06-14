@@ -117,7 +117,12 @@ const CategoryAdd = props => {
 const styles = StyleSheet.create({
   section: {flex: 4},
   list: {flex: 3},
-  add: {flex: 1},
+  add: {
+    flex: 1,
+    maxHeight: '15%',
+    maxWidth: '20%',
+    marginLeft: 280,
+  },
 });
 
 export default CategoriesList;
