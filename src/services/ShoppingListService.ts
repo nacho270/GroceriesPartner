@@ -103,6 +103,7 @@ export class ShoppingListService {
 
   removeAll() {
     this.currentList = [];
+    this.storeShoppingList();
   }
 
   getCurrentShoppingListGroupedByCategory() {
