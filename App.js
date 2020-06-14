@@ -91,12 +91,12 @@ const styles = StyleSheet.create({
   badgePlacement: {
     // On React Native < 0.57 overflow outside of parent will not work on Android, see https://git.io/fhLJ8
     position: 'absolute',
-    right: -6,
+    right: -7,
     top: -3,
     backgroundColor: 'red',
     borderRadius: 6,
-    width: 13,
-    height: 13,
+    width: 15,
+    height: 15,
     justifyContent: 'center',
     alignItems: 'center',
   },

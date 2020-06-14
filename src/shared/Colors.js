@@ -20,11 +20,11 @@ export default {
 
     sky_blue: '#509FFF',
     light_blue: '#1A73FF',
-    light_yellow: '#FEF284',
+    light_yellow: '#FD8408',
 
     dark_grey: '#868686',
     maroon: '#795548',
-    white: '#FFFFFF',
+    white: '#45B6F5',
 
     fuchsia: 'fuchsia',
     pink: 'pink',

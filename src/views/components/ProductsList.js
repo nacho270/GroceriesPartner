@@ -151,7 +151,7 @@ const ProductAdd = props => {
 
 const styles = StyleSheet.create({
   section: {flex: 10},
-  list: {minHeight: '90%'},
+  list: {maxHeight: '85%'},
   noproducts: {
     flex: 1,
     padding: 10,

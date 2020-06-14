@@ -113,7 +113,7 @@ const ShoppingListView = props => {
           );
         }}
       />
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.bottomButtonsContainer}>
         <TouchableOpacity
           style={styles.deleteCheckedButton}
           onPress={props.onDeletedCheckedProducts}>
@@ -140,7 +140,14 @@ const CategoryGroupCard = props => {
         ...styles.card,
         borderColor: props.group.category.color,
       }}>
-      <Text style={styles.title}>{props.group.category.name}</Text>
+      <Text
+        style={{
+          ...styles.title,
+          backgroundColor: props.group.category.color,
+          // color: safeFontColor,
+        }}>
+        {props.group.category.name}
+      </Text>
       <FlatList
         data={props.group.products}
         keyExtractor={(_, index) => index.toString()}
@@ -191,6 +198,7 @@ const ProductRow = props => {
   if (props.shoppingItem.checked) {
     textStyle.textDecorationLine = 'line-through';
     textStyle.textDecorationStyle = 'solid';
+    textStyle.color = Colors.row_separator;
   }
   return (
     <View style={styles.productRow}>
@@ -219,9 +227,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   title: {
-    marginTop: 10,
+    width: '100%',
     fontSize: 20,
-    marginBottom: 10,
+    color: 'white',
+    textAlign: 'center',
+    marginBottom: 5,
+    paddingBottom: 5,
+    fontWeight: 'bold',
+    // marginTop: 10,
   },
   subtitle: {
     paddingTop: 5,
@@ -232,15 +245,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   card: {
-    borderWidth: 2,
+    borderWidth: 4,
     width: 300,
     maxWidth: '100%',
     alignItems: 'center',
     backgroundColor: Colors.defaultBackground,
-    paddingBottom: 20,
-    paddingTop: 5,
+    paddingBottom: 15,
     borderRadius: 10,
     marginBottom: 20,
+    // paddingTop: 5,
 
     // shadowColor: 'black',
     // shadowOffset: {width: 0, height: 2},
@@ -249,8 +262,8 @@ const styles = StyleSheet.create({
     // elevation: 8,
   },
   productRow: {
-    margin: 10,
-    paddingBottom: 10,
+    margin: 5,
+    paddingBottom: 5,
     paddingLeft: 5,
     borderBottomColor: Colors.selectedRow,
     borderBottomWidth: 1,
@@ -261,6 +274,7 @@ const styles = StyleSheet.create({
   },
   productRowTouch: {width: '100%'},
   productRowText: {fontSize: 16},
+  bottomButtonsContainer: {flexDirection: 'row'},
   deleteCheckedButton: {
     borderColor: Colors.buttonBlue,
     borderWidth: 1,

@@ -48,5 +48,5 @@ export default {
   PRODUCTSERVICE_defaulCategoryPersonalCandy: 'Golosinas',
   PRODUCTSERVICE_defaulCategoryPersonalBread: 'Panadería',
   PRODUCTSERVICE_defaulCategoryPersonalBeverages: 'Bebidas',
-  PRODUCTSERVICE_defaulCategoryPersonalGeneral: 'General',
+  PRODUCTSERVICE_defaulCategoryPersonalGeneral: 'Almacén',
 };

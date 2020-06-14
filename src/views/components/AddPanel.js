@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   addButtonContainer: {
     flexDirection: 'row-reverse',
     marginLeft: 20,
-    padding: 10,
+    // padding: 10,
   },
   addButton: {
     height: 50,

@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   list: {
     width: '100%',
   },
-  flatList: {height: '70%'},
+  flatList: {height: '90%'},
   row: {
     flexDirection: 'row',
     borderColor: Color.row_separator,
