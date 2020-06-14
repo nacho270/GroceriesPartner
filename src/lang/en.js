@@ -10,6 +10,8 @@ export default {
   SHOPPINGLIST_empty: 'Your shopping list is empty!',
   SHOPPINGLIST_removeProduct: "Delete '{{product}}'?",
   SHOPPINGLIST_removeCheckedProducts: 'Delete checked products',
+  SHOPPINGLIST_clearListQuestion: 'Are you sure you want to clear the list?',
+  SHOPPINGLIST_clearList: 'Clear list',
 
   PRODUCTVIEW_searchProduct: 'Search product...',
   PRODUCTVIEW_added: 'Added!',

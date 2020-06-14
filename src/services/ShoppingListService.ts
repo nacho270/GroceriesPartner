@@ -101,6 +101,10 @@ export class ShoppingListService {
       );
   }
 
+  removeAll() {
+    this.currentList = [];
+  }
+
   getCurrentShoppingListGroupedByCategory() {
     let groupedList = [];
     let shoppingListByName: ShoppingListProduct[] = this.getCurrentShoppingList();

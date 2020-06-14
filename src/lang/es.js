@@ -10,6 +10,8 @@ export default {
   SHOPPINGLIST_empty: 'Tu lista de compras está vacía!',
   SHOPPINGLIST_removeProduct: "Borrar '{{product}}'?",
   SHOPPINGLIST_removeCheckedProducts: 'Borrar productos tachados',
+  SHOPPINGLIST_clearListQuestion: 'Seguro de vaciar la lista?',
+  SHOPPINGLIST_clearList: 'Vaciar lista',
 
   PRODUCTVIEW_searchProduct: 'Buscar producto...',
   PRODUCTVIEW_added: 'Agregado!',

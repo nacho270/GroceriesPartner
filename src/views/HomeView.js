@@ -36,6 +36,31 @@ export default function HomeScreen({navigation}) {
     );
   };
 
+  const removeAll = () => {
+    getShoppingListService().removeAll();
+    setCurrentList(
+      getShoppingListService().getCurrentShoppingListGroupedByCategory(),
+    );
+  };
+
+  const onClearList = () => {
+    Alert.alert(
+      translate('SHOPPINGLIST_clearListQuestion'),
+      '',
+      [
+        {
+          text: translate('GENERAL_yes'),
+          onPress: () => removeAll(),
+        },
+        {
+          text: translate('GENERAL_no'),
+          style: 'destructive',
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
   const onMarkShoppingItem = shoppingItem => {
     if (shoppingItem.checked) {
       getShoppingListService().markProductAsUnhecked(shoppingItem);
@@ -61,6 +86,7 @@ export default function HomeScreen({navigation}) {
         onDeleteProduct={onDeleteProduct}
         onMarkShoppingItem={onMarkShoppingItem}
         onDeletedCheckedProducts={onDeletedCheckedProducts}
+        onClearList={onClearList}
       />
     );
   }
@@ -71,7 +97,7 @@ export default function HomeScreen({navigation}) {
 const ShoppingListView = props => {
   return (
     <View>
-      <Text style={styles.mainTitle}>Shopping List</Text>
+      <Text style={styles.mainTitle}>{translate('MENU_shoppingList')}</Text>
       <Text style={styles.subtitle}>{translate('GENERAL_longPress')}</Text>
 
       <FlatList
@@ -87,12 +113,19 @@ const ShoppingListView = props => {
           );
         }}
       />
-      <View>
+      <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
           style={styles.deleteCheckedButton}
           onPress={props.onDeletedCheckedProducts}>
           <Text style={styles.deleteCheckedText}>
             {translate('SHOPPINGLIST_removeCheckedProducts')}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.deleteCheckedButton}
+          onPress={props.onClearList}>
+          <Text style={styles.deleteCheckedText}>
+            {translate('SHOPPINGLIST_clearList')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -235,6 +268,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: Colors.buttonBlue,
     borderRadius: 10,
+    margin: 5,
   },
   deleteCheckedText: {color: 'white', fontWeight: 'bold'},
 });
