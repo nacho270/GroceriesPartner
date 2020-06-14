@@ -3,7 +3,7 @@ import ListSection from './ListSection';
 import {getProductService} from '../../services/DependencyResolver';
 import {getShoppingListService} from '../../services/DependencyResolver';
 import AddPanel from './AddPanel';
-import {View, StyleSheet, Alert, Text} from 'react-native';
+import {View, StyleSheet, Alert, Text, Keyboard} from 'react-native';
 import CategoriesList from './CategoriesList';
 import Colors from '../../shared/Colors';
 import {translate} from '../../lang/language';
@@ -81,7 +81,7 @@ class ProductsList extends React.Component {
 
     if (products && products.length > 0) {
       display = (
-        <View style={styles.list}>
+        <View style={styles.list} onPress={() => Keyboard.dismiss()}>
           <ListSection
             title={translate('PRODUCTLIST_title')}
             placeholder={translate('PRODUCTLIST_placeholder')}

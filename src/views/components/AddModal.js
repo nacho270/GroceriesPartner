@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Button, Modal, TextInput} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Button,
+  Modal,
+  TextInput,
+  Keyboard,
+} from 'react-native';
 import {translate} from '../../lang/language';
 
 import Color from '../../shared/Colors';
@@ -24,7 +31,7 @@ const AddModal = props => {
 
   return (
     <Modal visible={props.visible} animationType="slide">
-      <View style={styles.modalContainer}>
+      <View style={styles.modalContainer} onPress={() => Keyboard.dismiss()}>
         <TextInput
           clearButtonMode="always"
           style={styles.modalTextInput}
