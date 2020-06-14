@@ -52,7 +52,7 @@ export class ProductService {
     ),
     new Category(
       translate('PRODUCTSERVICE_defaulCategoryPersonalGeneral'),
-      Color.category.black,
+      Color.category.olive,
     ),
   ];
 

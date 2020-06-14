@@ -10,7 +10,7 @@ export default {
   thumbnailBorder: 'black',
 
   category: {
-    black: '#000000',
+    olive: '#808000',
     red: '#FB0006',
     green: '#1c912f',
 
@@ -25,5 +25,9 @@ export default {
     dark_grey: '#868686',
     maroon: '#795548',
     white: '#FFFFFF',
+
+    fuchsia: 'fuchsia',
+    pink: 'pink',
+    burgundy: '#722f37',
   },
 };
