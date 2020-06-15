@@ -26,6 +26,7 @@ export default {
   CATEGORIESLIST_placeholder: 'Categoría...',
   CATEGORIESLIST_mustSelectColor: 'Debes elegir un color',
   CATEGORIESLIST_categoryAlreadyExists: "La categoría '{{category}}' ya existe",
+  CATEGORIESLIST_addNewCategory: 'Nueva categoría',
 
   PRODUCTLIST_empty: 'Agrega algunos productos con el boton + !',
   PRODUCTLIST_deleteProduct: "Borrar '{{product}}'?",
@@ -33,6 +34,7 @@ export default {
   PRODUCTLIST_placeholder: 'Producto...',
   PRODUCTLIST_mustPickCategory: 'Debes elegir una categoría',
   PRODUCTLIST_productAlreadyExists: "El producto '{{product}}' ya existe",
+  PRODUCTLIST_addNewProduct: 'Nuevo producto',
 
   PRODUCTSERVICE_categoryBeingUsed:
     "No se puede borrar la categoría '{{category}}' porque esta siendo usada",

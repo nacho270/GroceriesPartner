@@ -24,7 +24,7 @@ export default {
 
     dark_grey: '#868686',
     maroon: '#795548',
-    white: '#45B6F5',
+    cyan: '#45B6F5',
 
     fuchsia: 'fuchsia',
     pink: 'pink',

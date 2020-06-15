@@ -41,6 +41,7 @@ const AddPanel = props => {
         </TouchableOpacity>
       </View>
       <AddModal
+        title={props.title}
         visible={isAdding}
         onAdd={addItemHandler}
         onCancel={() => setIsAdding(false)}

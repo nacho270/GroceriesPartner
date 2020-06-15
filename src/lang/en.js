@@ -27,6 +27,7 @@ export default {
   CATEGORIESLIST_mustSelectColor: 'Must select a color',
   CATEGORIESLIST_categoryAlreadyExists:
     "Category '{{category}}' already exists",
+  CATEGORIESLIST_addNewCategory: 'New category',
 
   PRODUCTLIST_empty: 'Add some products with the + button!',
   PRODUCTLIST_deleteProduct: "Delete '{{product}}'?",
@@ -34,6 +35,7 @@ export default {
   PRODUCTLIST_placeholder: 'Product...',
   PRODUCTLIST_mustPickCategory: 'Must pick a category',
   PRODUCTLIST_productAlreadyExists: "Product '{{product}}' already exists",
+  PRODUCTLIST_addNewProduct: 'New product',
 
   PRODUCTSERVICE_categoryBeingUsed:
     "Cannot delete category '{{category}}' because it's being used",

@@ -103,6 +103,7 @@ const CategoryAdd = props => {
   return (
     <View style={styles.add}>
       <AddPanel
+        title={translate('CATEGORIESLIST_addNewCategory')}
         placeholder={translate('CATEGORIESLIST_placeholder')}
         onSuccessfulSubmit={successfulSubmitHandler}
         validate={enteredData => validateCategory(enteredData)}

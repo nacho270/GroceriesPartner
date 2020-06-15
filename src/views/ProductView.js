@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Text, TextInput} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import ProductsList from './components/ProductsList';
 import Color from '../shared/Colors';
@@ -39,17 +46,19 @@ export default function ProductsScreen() {
     );
   }
   return (
-    <SafeAreaView style={styles.screen}>
-      <View style={styles.content}>{display}</View>
-      <View style={styles.productListContainer}>
-        <ProductsList
-          onRef={ref => (this.child = ref)}
-          onProductListUpdated={onProductListUpdated}
-          onProductDelete={updateProductList}
-          onNewProduct={updateProductList}
-        />
-      </View>
-    </SafeAreaView>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <SafeAreaView style={styles.screen}>
+        <View style={styles.content}>{display}</View>
+        <View style={styles.productListContainer}>
+          <ProductsList
+            onRef={ref => (this.child = ref)}
+            onProductListUpdated={onProductListUpdated}
+            onProductDelete={updateProductList}
+            onNewProduct={updateProductList}
+          />
+        </View>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 

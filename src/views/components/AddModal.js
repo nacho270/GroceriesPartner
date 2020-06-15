@@ -6,6 +6,8 @@ import {
   Modal,
   TextInput,
   Keyboard,
+  Text,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {translate} from '../../lang/language';
 
@@ -31,32 +33,46 @@ const AddModal = props => {
 
   return (
     <Modal visible={props.visible} animationType="slide">
-      <View style={styles.modalContainer} onPress={() => Keyboard.dismiss()}>
-        <TextInput
-          clearButtonMode="always"
-          style={styles.modalTextInput}
-          placeholder={props.placeholder}
-          maxLength={30}
-          autoFocus={true}
-          onChangeText={onEnteredData}
-          value={data}
-        />
-        <View style={styles.modalExtraComponenContainer}>
-          {props.extraComponent}
-        </View>
-        <View style={styles.modalButtonsContainer}>
-          <Button
-            title={translate('ADDMODAL_add')}
-            onPress={() => handleSubmit(data)}
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.mainTitle}>{props.title}</Text>
+          <TextInput
+            clearButtonMode="always"
+            style={styles.modalTextInput}
+            placeholder={props.placeholder}
+            maxLength={30}
+            autoFocus={true}
+            onChangeText={onEnteredData}
+            value={data}
           />
-          <Button title={translate('ADDMODAL_cancel')} onPress={handleCancel} />
+          <View style={styles.modalExtraComponenContainer}>
+            {props.extraComponent}
+          </View>
+          <View style={styles.modalButtonsContainer}>
+            <Button
+              title={translate('ADDMODAL_add')}
+              onPress={() => handleSubmit(data)}
+            />
+            <Button
+              title={translate('ADDMODAL_cancel')}
+              onPress={handleCancel}
+            />
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
+  mainTitle: {
+    paddingTop: 10,
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: -50,
+    marginBottom: 50,
+  },
   title: {padding: 20, fontSize: 25, fontWeight: 'bold', textAlign: 'center'},
   row: {
     flexDirection: 'row',

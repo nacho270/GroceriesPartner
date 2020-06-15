@@ -28,7 +28,7 @@ export class ProductService {
     ),
     new Category(
       translate('PRODUCTSERVICE_defaulCategoryMilk'),
-      Color.category.white,
+      Color.category.cyan,
     ),
     new Category(
       translate('PRODUCTSERVICE_defaulCategoryHouseware'),
@@ -36,7 +36,7 @@ export class ProductService {
     ),
     new Category(
       translate('PRODUCTSERVICE_defaulCategoryPersonalCare'),
-      Color.category.dark_purple,
+      Color.category.pink,
     ),
     new Category(
       translate('PRODUCTSERVICE_defaulCategoryPersonalCandy'),

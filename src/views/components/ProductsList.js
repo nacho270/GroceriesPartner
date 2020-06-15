@@ -133,6 +133,7 @@ const ProductAdd = props => {
   return (
     <View style={styles.add}>
       <AddPanel
+        title={translate('PRODUCTLIST_addNewProduct')}
         placeholder={translate('PRODUCTLIST_placeholder')}
         onSuccessfulSubmit={successfulSubmitHandler}
         validate={enteredData => validateProduct(enteredData)}
