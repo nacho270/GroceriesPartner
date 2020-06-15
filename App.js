@@ -6,6 +6,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getShoppingListService} from './src/services/DependencyResolver';
 import {translate} from './src/lang/language';
+import {EventRegister} from 'react-native-event-listeners';
 
 import HomeScreen from './src/views/HomeView';
 import ProductsScreen from './src/views/ProductView';
@@ -15,11 +16,20 @@ const Tab = createBottomTabNavigator();
 
 // configre icon tabs: https://github.com/GeekyAnts/NativeBase/issues/72#issuecomment-535892409
 // generate icon with https://github.com/bamlab/react-native-make
+// ====================== MUST delete node_modules/react-native-i18n/android/src/AndoidManifest -> minSdk tag ========================
 
-function IconWithBadge({name, badgeCount, color, size}) {
+const IconWithBadge = props => {
+  const [badgeCount, setBadgeCount] = React.useState(
+    getShoppingListService().getCurrentShoppingList().length,
+  );
+
+  EventRegister.addEventListener('newProductInList', () => {
+    setBadgeCount(getShoppingListService().getCurrentShoppingList().length);
+  });
+
   return (
     <View style={styles.badgeWrapper}>
-      <Ionicons name={name} size={size} color={color} />
+      <Ionicons name={props.name} size={props.size} color={props.color} />
       {badgeCount > 0 && (
         <View style={styles.badgePlacement}>
           <Text style={styles.badge}>{badgeCount}</Text>
@@ -27,17 +37,7 @@ function IconWithBadge({name, badgeCount, color, size}) {
       )}
     </View>
   );
-}
-
-function ShoppingListWithBadge(props) {
-  let currentShoppingList = getShoppingListService().getCurrentShoppingList();
-  let badges = 0;
-  if (currentShoppingList && currentShoppingList.length > 0) {
-    badges = currentShoppingList.length;
-  }
-
-  return <IconWithBadge {...props} badgeCount={badges} />;
-}
+};
 
 export default function App() {
   return (
@@ -51,11 +51,7 @@ export default function App() {
               if (route.params.name === 'Shopping list') {
                 iconName = focused ? 'ios-list-box' : 'ios-list';
                 return (
-                  <ShoppingListWithBadge
-                    name={iconName}
-                    size={size}
-                    color={color}
-                  />
+                  <IconWithBadge name={iconName} size={size} color={color} />
                 );
               }
               iconName = focused

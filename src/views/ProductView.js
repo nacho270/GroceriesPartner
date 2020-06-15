@@ -14,6 +14,7 @@ import Overlay from 'react-native-modal-overlay';
 import Colors from '../shared/Colors';
 import {getProductService} from '../services/DependencyResolver';
 import {translate} from '../lang/language';
+import {EventRegister} from 'react-native-event-listeners';
 
 export default function ProductsScreen() {
   const [showOverlay, setShowOverlay] = React.useState(false);
@@ -24,6 +25,7 @@ export default function ProductsScreen() {
     setShowOverlay(true);
     setTimeout(function() {
       setShowOverlay(false);
+      EventRegister.emit('newProductInList', 'updateProductList');
     }, 1000);
   };
   const updateProductList = () => {

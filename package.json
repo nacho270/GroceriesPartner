@@ -16,6 +16,7 @@
     "@react-navigation/native": "^5.4.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
+    "react-native-event-listeners": "^1.0.7",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-grid-component": "^2.0.1",
     "react-native-i18n": "^2.0.15",

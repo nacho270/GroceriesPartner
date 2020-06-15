@@ -5,6 +5,7 @@ import {FlatList, TouchableOpacity} from 'react-native';
 import {getShoppingListService} from '../services/DependencyResolver';
 import Colors from '../shared/Colors';
 import {translate} from '../lang/language';
+import {EventRegister} from 'react-native-event-listeners';
 
 export default function HomeScreen({navigation}) {
   //
@@ -41,6 +42,7 @@ export default function HomeScreen({navigation}) {
     setCurrentList(
       getShoppingListService().getCurrentShoppingListGroupedByCategory(),
     );
+    EventRegister.emit('newProductInList', 'removeAll');
   };
 
   const onClearList = () => {
@@ -77,6 +79,7 @@ export default function HomeScreen({navigation}) {
     setCurrentList(
       getShoppingListService().getCurrentShoppingListGroupedByCategory(),
     );
+    EventRegister.emit('newProductInList', 'onDeletedCheckedProducts');
   };
 
   if (currentList && currentList.length > 0) {
