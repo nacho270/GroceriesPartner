@@ -35,6 +35,7 @@ export default function HomeScreen({navigation}) {
     setCurrentList(
       getShoppingListService().getCurrentShoppingListGroupedByCategory(),
     );
+    EventRegister.emit('newProductInList', 'onDeleteProduct');
   };
 
   const removeAll = () => {

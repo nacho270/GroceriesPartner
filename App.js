@@ -23,8 +23,18 @@ const IconWithBadge = props => {
     getShoppingListService().getCurrentShoppingList().length,
   );
 
-  EventRegister.addEventListener('newProductInList', () => {
-    setBadgeCount(getShoppingListService().getCurrentShoppingList().length);
+  const listener = React.useRef();
+
+  React.useEffect(() => {
+    listener.current = EventRegister.addEventListener(
+      'newProductInList',
+      () => {
+        setBadgeCount(getShoppingListService().getCurrentShoppingList().length);
+      },
+    );
+    return () => {
+      EventRegister.removeEventListener(listener.current);
+    };
   });
 
   return (
