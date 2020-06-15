@@ -2,7 +2,7 @@ export default {
   GENERAL_yes: 'Yes',
   GENERAL_no: 'No',
   GENERAL_ok: 'Ok',
-  GENERAL_longPress: 'Long press on item to delete it',
+  GENERAL_longPress: 'Long press over an item to delete it',
 
   MENU_shoppingList: 'Shopping List',
   MENU_products: 'Products',
