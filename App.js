@@ -11,11 +11,13 @@ import {EventRegister} from 'react-native-event-listeners';
 import HomeScreen from './src/views/HomeView';
 import ProductsScreen from './src/views/ProductView';
 import RecipesScreen from './src/views/RecipesView';
+import AboutScreen from './src/views/AboutView';
 
 const Tab = createBottomTabNavigator();
 
 // configre icon tabs: https://github.com/GeekyAnts/NativeBase/issues/72#issuecomment-535892409
 // generate icon with https://github.com/bamlab/react-native-make
+// icons list: https://oblador.github.io/react-native-vector-icons/
 // ====================== MUST delete node_modules/react-native-i18n/android/src/AndoidManifest -> minSdk tag ========================
 
 const IconWithBadge = props => {
@@ -59,14 +61,20 @@ export default function App() {
             tabBarIcon: ({focused, color, size}) => {
               let iconName;
               if (route.params.name === 'Shopping list') {
-                iconName = focused ? 'ios-list-box' : 'ios-list';
+                iconName = 'ios-list';
                 return (
                   <IconWithBadge name={iconName} size={size} color={color} />
                 );
               }
-              iconName = focused
-                ? 'ios-information-circle'
-                : 'ios-information-circle-outline';
+              if (route.params.name === 'Products') {
+                iconName = 'ios-menu';
+              }
+              if (route.params.name === 'Recipes') {
+                iconName = 'ios-nutrition';
+              }
+              if (route.params.name === 'About') {
+                iconName = 'ios-information-circle-outline';
+              }
               // You can return any component that you like here!
               return <Ionicons name={iconName} size={size} color={color} />;
             },
@@ -86,7 +94,16 @@ export default function App() {
             initialParams={{name: 'Products'}}
             component={ProductsScreen}
           />
-          {/* <Tab.Screen name="Recipes" component={RecipesScreen} /> */}
+          {/* <Tab.Screen
+            name="Recipes"
+            initialParams={{name: 'Recipes'}}
+            component={RecipesScreen}
+          />*/}
+          <Tab.Screen
+            name={translate('MENU_about')}
+            initialParams={{name: 'About'}}
+            component={AboutScreen}
+          />
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

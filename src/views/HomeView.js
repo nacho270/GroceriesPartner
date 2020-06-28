@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   card: {
-    borderWidth: 4,
+    borderWidth: 3,
     width: 300,
     maxWidth: '100%',
     alignItems: 'center',
@@ -278,15 +278,16 @@ const styles = StyleSheet.create({
   },
   productRowTouch: {width: '100%'},
   productRowText: {fontSize: 16},
-  bottomButtonsContainer: {flexDirection: 'row'},
+  bottomButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
   deleteCheckedButton: {
-    borderColor: Colors.buttonBlue,
-    borderWidth: 1,
-    alignItems: 'center',
-    padding: 10,
     backgroundColor: Colors.buttonBlue,
+    padding: 10,
     borderRadius: 10,
-    margin: 5,
+    marginBottom: 10,
+    marginTop: 15,
   },
   deleteCheckedText: {color: 'white', fontWeight: 'bold'},
 });

@@ -2,10 +2,11 @@ export default {
   GENERAL_yes: 'Yes',
   GENERAL_no: 'No',
   GENERAL_ok: 'Ok',
-  GENERAL_longPress: 'Long press over an item to delete it',
+  GENERAL_longPress: 'Tap an item to check it or long press to delete it',
 
   MENU_shoppingList: 'Shopping List',
   MENU_products: 'Products',
+  MENU_about: 'About',
 
   SHOPPINGLIST_empty: 'Your shopping list is empty!',
   SHOPPINGLIST_removeProduct: "Delete '{{product}}'?",
@@ -52,4 +53,6 @@ export default {
   PRODUCTSERVICE_defaulCategoryPersonalBread: 'Bread',
   PRODUCTSERVICE_defaulCategoryPersonalBeverages: 'Beverages',
   PRODUCTSERVICE_defaulCategoryPersonalGeneral: 'General',
+
+  ABOUT_version: 'Version',
 };

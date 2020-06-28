@@ -2,10 +2,11 @@ export default {
   GENERAL_yes: 'Si',
   GENERAL_no: 'No',
   GENERAL_ok: 'Ok',
-  GENERAL_longPress: 'Mantén presionado un item para borrarlo',
+  GENERAL_longPress: 'Toca un item para tacharlo o presiona para borrarlo',
 
   MENU_shoppingList: 'Lista de compras',
   MENU_products: 'Productos',
+  MENU_about: 'Acerca',
 
   SHOPPINGLIST_empty: 'Tu lista de compras está vacía!',
   SHOPPINGLIST_removeProduct: "Borrar '{{product}}'?",
@@ -51,4 +52,6 @@ export default {
   PRODUCTSERVICE_defaulCategoryPersonalBread: 'Panadería',
   PRODUCTSERVICE_defaulCategoryPersonalBeverages: 'Bebidas',
   PRODUCTSERVICE_defaulCategoryPersonalGeneral: 'Almacén',
+
+  ABOUT_version: 'Versión',
 };
